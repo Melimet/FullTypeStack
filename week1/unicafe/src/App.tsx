@@ -11,7 +11,7 @@ function Total({ good, neutral, bad }: values) {
       <td>Total</td>
       <td>{good + neutral + bad}</td>
     </tr>
-  )
+  );
 }
 
 function Average({ good, neutral, bad }: values) {
@@ -68,21 +68,26 @@ function Statistics({ good, neutral, bad }: values) {
   );
 }
 
-function Button({ name }: { name: string }) {
-  return <button>{name}</button>;
+function Button({ onClick, name }: { onClick: () => void; name: string }) {
+  return <button onClick={onClick}>{name}</button>;
 }
 
 const App = () => {
-  const [good, setGood] = useState(1);
+  const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+
+  function handleClick(setter: (i: number) => void, value: number) {
+    return () => setter(value + 1);
+  }
 
   return (
     <div>
       <h2>give feedback</h2>
-      <Button name={"good"} />
-      <Button name={"neutral"} />
-      <Button name={"bad"} />
+      <Button onClick={handleClick(setGood, good)} name={"good"} />
+      <Button onClick={handleClick(setNeutral, neutral)} name={"neutral"} />
+      <Button onClick={handleClick(setBad, bad)} name={"bad"} />
+
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );

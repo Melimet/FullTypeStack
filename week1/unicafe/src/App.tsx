@@ -17,6 +17,21 @@ function Positive({good, neutral, bad}: values){
   return <p>Positive: {good / (good+neutral+bad)}%</p>
 }
 
+function Statistics({good, neutral, bad}: values){
+
+  return <>
+      <h2>statistics</h2>
+
+      <p>good {good}</p>
+      <p>neutral {neutral}</p>
+      <p>bad {bad}</p>
+
+      <Total good={good} neutral={neutral} bad={bad}/>
+      <Average good={good} neutral={neutral} bad={bad}/> 
+      <Positive good={good} neutral={neutral} bad={bad}/>
+    </>
+}
+
 const App = () => {
   const [good, setGood] = useState(6)
   const [neutral, setNeutral] = useState(2)
@@ -28,16 +43,8 @@ const App = () => {
       <button>good</button>
       <button>neutral</button>
       <button>bad</button>
-      
-      <h2>statistics</h2>
-      
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
+      <Statistics good={good} neutral={neutral} bad={bad}/>
 
-      <Total good={good} neutral={neutral} bad={bad}/>
-      <Average good={good} neutral={neutral} bad={bad}/> 
-      <Positive good={good} neutral={neutral} bad={bad}/>
     </div>
   )
 }

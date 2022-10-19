@@ -7,7 +7,6 @@ type PartType = {
   exercises: number,
 }
 
-
 function Part({ name, exercises}: PartType) {
   return <p>{name}, exercises: {exercises}</p>
 }
@@ -17,7 +16,6 @@ function Content({ parts }: {parts: PartType[]}){
   {parts.map((part) => <Part key={part.name} name={part.name} exercises={part.exercises}/>)}
   </div>
 }
-
 
 function Total({ parts }: {parts: PartType[]}){
   return <p>

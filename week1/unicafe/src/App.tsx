@@ -18,7 +18,12 @@ function Positive({good, neutral, bad}: values){
 }
 
 function Statistics({good, neutral, bad}: values){
-
+  if (!good && !neutral && !bad) return (
+  <>
+    <h2>statistics</h2> 
+    <p>No feedback given</p>
+  </>
+  )
   return <>
       <h2>statistics</h2>
 
@@ -33,9 +38,9 @@ function Statistics({good, neutral, bad}: values){
 }
 
 const App = () => {
-  const [good, setGood] = useState(6)
-  const [neutral, setNeutral] = useState(2)
-  const [bad, setBad] = useState(1)
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
 
   return (
     <div>

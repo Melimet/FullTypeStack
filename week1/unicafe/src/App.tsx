@@ -17,24 +17,35 @@ function Positive({good, neutral, bad}: values){
   return <p>Positive: {good / (good+neutral+bad)}%</p>
 }
 
+function StatisticLine({text, value}: {text:string, value: number}){
+  return <p>{text} {value}</p>
+}
+
 function Statistics({good, neutral, bad}: values){
-  if (!good && !neutral && !bad) return (
+  
+  if (!good && !neutral && !bad) 
+  return (
   <>
     <h2>statistics</h2> 
     <p>No feedback given</p>
   </>
   )
+
   return <>
       <h2>statistics</h2>
 
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
+      <StatisticLine text="good" value={good}/>
+      <StatisticLine text="neutral" value={neutral}/>
+      <StatisticLine text="bad" value={bad}/>
 
       <Total good={good} neutral={neutral} bad={bad}/>
       <Average good={good} neutral={neutral} bad={bad}/> 
       <Positive good={good} neutral={neutral} bad={bad}/>
     </>
+}
+
+function Button({name}: {name:string}){
+  return <button>{name}</button>
 }
 
 const App = () => {
@@ -45,9 +56,9 @@ const App = () => {
   return (
     <div>
       <h2>give feedback</h2>
-      <button>good</button>
-      <button>neutral</button>
-      <button>bad</button>
+      <Button name={"good"}/>
+      <Button name={"neutral"}/>
+      <Button name={"bad"}/>
       <Statistics good={good} neutral={neutral} bad={bad}/>
 
     </div>

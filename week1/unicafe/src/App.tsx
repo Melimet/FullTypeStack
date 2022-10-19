@@ -30,9 +30,11 @@ const App = () => {
       <button>bad</button>
       
       <h2>statistics</h2>
+      
       <p>good {good}</p>
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
+
       <Total good={good} neutral={neutral} bad={bad}/>
       <Average good={good} neutral={neutral} bad={bad}/> 
       <Positive good={good} neutral={neutral} bad={bad}/>

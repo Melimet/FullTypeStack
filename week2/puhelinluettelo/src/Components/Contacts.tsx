@@ -1,12 +1,11 @@
 import { Person } from "../App"
 
-function Contacts({
-  persons,
-  currentFilter,
-}: {
+interface ContactsProps {
   persons: Person[]
   currentFilter: string
-}) {
+}
+
+function Contacts({ persons, currentFilter }: ContactsProps) {
   return (
     <>
       <h2> Numbers </h2>
@@ -19,7 +18,6 @@ function Contacts({
             {person.name}, {person.number}
           </p>
         ))}
-      )
     </>
   )
 }

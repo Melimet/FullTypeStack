@@ -1,12 +1,15 @@
 import React from "react"
 
+interface FilterProps {
+  handleFilter: (event: React.ChangeEvent<HTMLInputElement>) => void
+  currentFilter: string
+}
+
+
 function Filter({
   handleFilter,
   currentFilter,
-}: {
-  handleFilter: (event: React.ChangeEvent<HTMLInputElement>) => void
-  currentFilter: string
-}) {
+}: FilterProps ) {
   return (
     <p>
       filter contacts

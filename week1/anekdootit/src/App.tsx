@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from "react"
 
 const App = () => {
   const anecdotes = [
@@ -9,23 +9,23 @@ const App = () => {
     "Premature optimization is the root of all evil.",
     "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
     "Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.",
-  ];
+  ]
 
-  const [selected, setSelected] = useState(0);
-  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
-  const [mostPopular, setMostPopular] = useState(0);
+  const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+  const [mostPopular, setMostPopular] = useState(0)
 
   function handleClick() {
-    setSelected(Math.round(Math.random() * anecdotes.length - 1));
+    setSelected(Math.round(Math.random() * anecdotes.length - 1))
   }
 
   function addVote() {
-    const voteCopy = [...votes];
-    voteCopy[selected] += 1;
-    setVotes(voteCopy);
+    const voteCopy = [...votes]
+    voteCopy[selected] += 1
+    setVotes(voteCopy)
 
     if (votes[mostPopular] <= votes[selected]) {
-      setMostPopular(selected);
+      setMostPopular(selected)
     }
   }
 
@@ -39,7 +39,7 @@ const App = () => {
       <h2>Most popular anecdote with {votes[mostPopular]} votes</h2>
       <p>{anecdotes[mostPopular]}</p>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

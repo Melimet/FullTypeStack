@@ -13,6 +13,7 @@ export interface Country {
 function App() {
   const [countries, setCountries] = useState<Country[]>([])
   const [filter, setFilter] = useState('')
+  const [displayCountry, setDisplayCountry] = useState(new Map<string, boolean>())
 
   useEffect(() => {
     getCountriesFromApi()
@@ -23,7 +24,8 @@ function App() {
           "https://restcountries.com/v2/all"
         )
         const data = await res.data
-        const newCountries = data.map((country) => ({
+        const newCountries = data.map((country) => (
+          {
           name: country.name,
           capital: country.capital,
           languages: country.languages,

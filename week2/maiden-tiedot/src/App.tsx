@@ -6,15 +6,18 @@ import { Filter } from "./Components/Filter"
 export interface Country {
   name: string
   capital: string
-  languages: string[]
-  flags: string[]
+  languages: {
+    name: string
+  }[]
+  flag: string
 }
 
 function App() {
   const [countries, setCountries] = useState<Country[]>([])
-  const [filter, setFilter] = useState('')
-  const [displayCountry, setDisplayCountry] = useState(new Map<string, boolean>())
-
+  const [filter, setFilter] = useState("")
+  const [displayCountry, setDisplayCountry] = useState(
+    new Map<string, boolean>()
+  )
   useEffect(() => {
     getCountriesFromApi()
 
@@ -23,19 +26,23 @@ function App() {
         const res = await axios.get<Country[]>(
           "https://restcountries.com/v2/all"
         )
-        const data = await res.data
-        const newCountries = data.map((country) => (
-          {
+
+        const newCountries = res.data.map((country) => ({
           name: country.name,
           capital: country.capital,
           languages: country.languages,
-          flags: country.flags,
+          flag: country.flag,
         }))
-        
-        setCountries(newCountries)
+        const newCountryDisplays = new Map<string, boolean>()
 
+        newCountries.forEach((country) =>
+          newCountryDisplays.set(country.name, false)
+        )
+
+        setDisplayCountry(newCountryDisplays)
+        setCountries(newCountries)
       } catch (err) {
-        console.log(`error` + err)
+        console.log(`error`, err)
       }
     }
   }, [])
@@ -47,8 +54,13 @@ function App() {
   return (
     <div className="App">
       <Filter filter={filter} handleFilter={handleFilter} />
-      <Countries countries={countries} filter={filter} />
-  </div>
+      <Countries
+        countries={countries}
+        filter={filter}
+        displayCountry={displayCountry}
+        setDisplayCountry={setDisplayCountry}
+      />
+    </div>
   )
 }
 

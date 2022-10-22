@@ -4,11 +4,17 @@ import { AddContact } from "./Components/AddContact"
 import { Contacts } from "./Components/Contacts"
 import { Filter } from "./Components/Filter"
 import { createContact, updateContactInDB } from "./services/contacts"
+import { Notification } from "./Components/Notification"
 
 export interface Person {
   name: string
   number: string
   id: number
+}
+
+export interface Message{
+  message: string,
+  goodNews: boolean
 }
 
 const App = () => {
@@ -17,6 +23,10 @@ const App = () => {
   const [currentFilter, setFilter] = useState("")
   const [newName, setNewName] = useState("")
   const [newPhoneNumber, setPhoneNumber] = useState("")
+  const [message, setMessage] = useState<Message>({
+    message: "",
+    goodNews: false,
+  })
 
   useEffect(() => {
     getPersonsFromDb()
@@ -41,6 +51,7 @@ const App = () => {
   function removeContactFromState(removedPerson: Person) {
     const newPersons = persons.filter((person) => person.id != removedPerson.id)
     setPersons(newPersons)
+    setMessage({message: `${removedPerson.name} removed from contacts`, goodNews:true})
   }
 
   function updateContact(newPerson: Person) {
@@ -55,6 +66,7 @@ const App = () => {
       (person) => person.name !== updatedContact.name
     )
     setPersons(updatedPersons.concat(updatedContact))
+    setMessage({message: "Contact updated!", goodNews: true})
   }
 
   function handleSubmit(event: React.MouseEvent): void {
@@ -77,11 +89,17 @@ const App = () => {
 
     createContact(newPerson)
     setPersons(persons.concat(newPerson))
+    setMessage({message: "New contact added!", goodNews: true})
+  }
+
+  function createMessage(incomingMessage: Message) {
+    setMessage(incomingMessage)
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message.message} goodNews={message.goodNews} />
       <Filter handleFilter={handleFilter} currentFilter={currentFilter} />
       <AddContact
         newName={newName}
@@ -94,6 +112,7 @@ const App = () => {
         persons={persons}
         currentFilter={currentFilter}
         removeContactFromState={removeContactFromState}
+        createMessage={createMessage}
       />
     </div>
   )

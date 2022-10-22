@@ -12,4 +12,8 @@ async function removeContact(person: Person) {
   return result.status
 }
 
-export { createContact, removeContact}
+function updateContactInDB(contact: Person) {
+  return axios.put(`${baseUrl}/${contact.id}`, contact)
+}
+
+export { createContact, removeContact, updateContactInDB}

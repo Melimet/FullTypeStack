@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import { AddContact } from "./Components/AddContact"
 import { Contacts } from "./Components/Contacts"
 import { Filter } from "./Components/Filter"
-import { createContact } from "./services/contacts"
+import { createContact, updateContactInDB } from "./services/contacts"
 
 export interface Person {
   name: string
@@ -43,16 +43,35 @@ const App = () => {
     setPersons(newPersons)
   }
 
+  function updateContact(newPerson: Person) {
+    const foundPerson = persons.find((person) => person.name === newPerson.name)
+    if (!foundPerson) return
+
+    const updatedContact: Person = { ...newPerson, id: foundPerson.id }
+
+    updateContactInDB(updatedContact)
+
+    const updatedPersons = persons.filter(
+      (person) => person.name !== updatedContact.name
+    )
+    setPersons(updatedPersons.concat(updatedContact))
+  }
+
   function handleSubmit(event: React.MouseEvent): void {
     event.preventDefault()
 
     const newPerson = {
       name: newName,
       number: newPhoneNumber,
-      id: persons.length + 1,
+      id:
+        Math.max(
+          persons.reduce((prev, current) => Math.max(current.id, prev), 0)
+        ) + 1,
     }
     if (persons.some((person) => person.name === newPerson.name)) {
-      alert(`person ${newPerson.name} already exists`)
+      if (confirm(`person ${newPerson.name} already exists, update number?`)) {
+        updateContact(newPerson)
+      }
       return
     }
 

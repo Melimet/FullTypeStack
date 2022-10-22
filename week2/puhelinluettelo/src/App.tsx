@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import { AddContact } from "./Components/AddContact"
 import { Contacts } from "./Components/Contacts"
 import { Filter } from "./Components/Filter"
+import { createContact } from "./services/contacts"
 
 export interface Person {
   name: string
@@ -44,6 +45,8 @@ const App = () => {
       alert(`person ${newPerson.name} already exists`)
       return
     }
+
+    createContact(newPerson)
     setPersons(persons.concat(newPerson))
   }
 

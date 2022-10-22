@@ -1,11 +1,15 @@
-import axios, { Axios } from 'axios'
+import axios from 'axios'
 import { Person } from '../App'
 
 const baseUrl = "http://localhost:3001/persons"
 
 function createContact(newContact: Person) {
-  console.log(newContact)
   return axios.post(baseUrl, newContact)
 }
 
-export { createContact }
+async function removeContact(person: Person) {
+  const result = await axios.delete(`${baseUrl}/${person.id}`)
+  return result.status
+}
+
+export { createContact, removeContact}

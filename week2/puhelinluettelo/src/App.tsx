@@ -8,6 +8,7 @@ import { createContact } from "./services/contacts"
 export interface Person {
   name: string
   number: string
+  id: number
 }
 
 const App = () => {
@@ -37,10 +38,19 @@ const App = () => {
     setPhoneNumber(event.target.value)
   }
 
+  function removeContactFromState(removedPerson: Person) {
+    const newPersons = persons.filter((person) => person.id != removedPerson.id)
+    setPersons(newPersons)
+  }
+
   function handleSubmit(event: React.MouseEvent): void {
     event.preventDefault()
 
-    const newPerson = { name: newName, number: newPhoneNumber }
+    const newPerson = {
+      name: newName,
+      number: newPhoneNumber,
+      id: persons.length + 1,
+    }
     if (persons.some((person) => person.name === newPerson.name)) {
       alert(`person ${newPerson.name} already exists`)
       return
@@ -61,7 +71,11 @@ const App = () => {
         handlePhoneNumber={handlePhoneNumber}
         handleSubmit={handleSubmit}
       />
-      <Contacts persons={persons} currentFilter={currentFilter} />
+      <Contacts
+        persons={persons}
+        currentFilter={currentFilter}
+        removeContactFromState={removeContactFromState}
+      />
     </div>
   )
 }

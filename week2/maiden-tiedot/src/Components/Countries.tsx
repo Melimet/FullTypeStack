@@ -22,6 +22,7 @@ function Countries({
 
   function handleClick(targetCountry: string): void {
     if (filteredCountries.length == 1) return
+    
     const copy = new Map(displayCountry)
     copy.set(targetCountry, !copy.get(targetCountry))
     setDisplayCountry(new Map(copy))

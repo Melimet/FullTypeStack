@@ -1,10 +1,13 @@
 import axios from 'axios'
 import { Person } from '../App'
 
-const baseUrl = "http://localhost:3001/persons"
+const baseUrl = "/api/persons"
 
-function createContact(newContact: Person) {
-  return axios.post(baseUrl, newContact)
+async function createContact(newContact: Person) {
+  const res = await axios.post<Person>(baseUrl, newContact)
+  if (res.status == 400) return undefined
+
+  return res.data
 }
 
 async function removeContact(person: Person) {

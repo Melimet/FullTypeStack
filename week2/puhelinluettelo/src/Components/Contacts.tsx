@@ -19,7 +19,7 @@ function Contacts({
       try {
         const resultStatus = await removeContact(person)
         console.log(resultStatus)
-        if (resultStatus == 200) removeContactFromState(person)
+        if (resultStatus === 204) removeContactFromState(person)
       } catch (error) {
         createMessage({
           message: "Contact has already been deleted",

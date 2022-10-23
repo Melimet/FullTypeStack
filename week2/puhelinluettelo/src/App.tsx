@@ -9,7 +9,7 @@ import { Notification } from "./Components/Notification"
 export interface Person {
   name: string
   number: string
-  id: number
+  id?: number
 }
 
 export interface Message{
@@ -28,10 +28,11 @@ const App = () => {
     goodNews: false,
   })
 
+  const baseUrl="/api/persons"
   useEffect(() => {
     getPersonsFromDb()
     async function getPersonsFromDb() {
-      const response = await axios.get("http://localhost:3001/persons")
+      const response = await axios.get(baseUrl)
       setPersons(await response.data)
     }
   }, [])
@@ -49,7 +50,10 @@ const App = () => {
   }
 
   function removeContactFromState(removedPerson: Person) {
+    
     const newPersons = persons.filter((person) => person.id != removedPerson.id)
+    console.log("🚀 ~ file: App.tsx ~ line 55 ~ removeContactFromState ~ newPersons", newPersons)
+
     setPersons(newPersons)
     setMessage({message: `${removedPerson.name} removed from contacts`, goodNews:true})
   }
@@ -69,16 +73,12 @@ const App = () => {
     setMessage({message: "Contact updated!", goodNews: true})
   }
 
-  function handleSubmit(event: React.MouseEvent): void {
+  async function handleSubmit(event: React.MouseEvent) {
     event.preventDefault()
 
     const newPerson = {
       name: newName,
       number: newPhoneNumber,
-      id:
-        Math.max(
-          persons.reduce((prev, current) => Math.max(current.id, prev), 0)
-        ) + 1,
     }
     if (persons.some((person) => person.name === newPerson.name)) {
       if (confirm(`person ${newPerson.name} already exists, update number?`)) {
@@ -87,8 +87,12 @@ const App = () => {
       return
     }
 
-    createContact(newPerson)
-    setPersons(persons.concat(newPerson))
+    const createdPerson = await createContact(newPerson)
+
+    if (!createdPerson) return 
+
+
+    setPersons(persons.concat(createdPerson))
     setMessage({message: "New contact added!", goodNews: true})
   }
 

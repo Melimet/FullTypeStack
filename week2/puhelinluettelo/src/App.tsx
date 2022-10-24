@@ -52,7 +52,6 @@ const App = () => {
   function removeContactFromState(removedPerson: Person) {
     
     const newPersons = persons.filter((person) => person.id != removedPerson.id)
-    console.log("🚀 ~ file: App.tsx ~ line 55 ~ removeContactFromState ~ newPersons", newPersons)
 
     setPersons(newPersons)
     setMessage({message: `${removedPerson.name} removed from contacts`, goodNews:true})
@@ -89,7 +88,10 @@ const App = () => {
 
     const createdPerson = await createContact(newPerson)
 
-    if (!createdPerson) return 
+    if (!createdPerson) {
+      createMessage({ message: "Incorrect parameters!", goodNews:false})
+      return
+    } 
 
 
     setPersons(persons.concat(createdPerson))

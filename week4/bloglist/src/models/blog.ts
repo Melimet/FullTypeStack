@@ -15,10 +15,12 @@ if (!mongoUrl) {
   console.log("no url for mongo, critical failure")
   process.exit()
 }
-mongoose.connect(mongoUrl)
+mongoose
+  .connect(mongoUrl)
   .then(() => {
     console.log("Db connection succesful")
-  }).catch(err => {
+  })
+  .catch((err) => {
     console.log("mongo err: ", err)
   })
 

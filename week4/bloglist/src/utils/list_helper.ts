@@ -10,6 +10,8 @@ function totalLikes(blogs: Blog[]) {
 }
 
 function favoriteBlog(blogs: Blog[]) {
+  if (blogs.length === 0) return undefined
+
   const emptyBlog: Blog = {
     _id: "",
     title: "",
@@ -18,18 +20,30 @@ function favoriteBlog(blogs: Blog[]) {
     likes: -Infinity,
     __v: 0,
   }
+
   const result = blogs.reduce(
     (mostLikedBlog, current) =>
       current.likes >= mostLikedBlog.likes ? current : mostLikedBlog,
     emptyBlog
   )
 
-  if (
-    Object.entries(emptyBlog).toString() === Object.entries(result).toString()
-  )
-    return undefined
-
   return result
 }
 
-export { dummy, totalLikes, favoriteBlog }
+function mostBlogs(blogs: Blog[]) {
+  if (blogs.length === 0) return undefined
+
+  const [mostActiveBlogger] = Array.from(blogs.reduce(
+    (bloggers, current) =>
+      bloggers.set(
+        current.author,
+        bloggers.has(current.author) ? bloggers.get(current.author)! + 1 : 1
+      ),
+    new Map<string, number>()
+  )).sort((blog1, blog2) => blog2[1] - blog1[1])
+        console.log(mostActiveBlogger)
+  return {author: mostActiveBlogger[0], writtenBlogs: mostActiveBlogger[1]}
+
+}
+
+export { dummy, totalLikes, favoriteBlog, mostBlogs}

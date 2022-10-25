@@ -5,4 +5,8 @@ const dummy = (blogs: Blog[]) => {
   return 1
 }
 
-export { dummy }
+function totalLikes(blogs: Blog[]) {
+  return blogs.reduce((sum, current) => sum + current.likes, 0)
+}
+
+export { dummy, totalLikes }

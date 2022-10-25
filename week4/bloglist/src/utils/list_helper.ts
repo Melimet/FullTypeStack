@@ -9,4 +9,27 @@ function totalLikes(blogs: Blog[]) {
   return blogs.reduce((sum, current) => sum + current.likes, 0)
 }
 
-export { dummy, totalLikes }
+function favoriteBlog(blogs: Blog[]) {
+  const emptyBlog: Blog = {
+    _id: "",
+    title: "",
+    author: "",
+    url: "",
+    likes: -Infinity,
+    __v: 0,
+  }
+  const result = blogs.reduce(
+    (mostLikedBlog, current) =>
+      current.likes >= mostLikedBlog.likes ? current : mostLikedBlog,
+    emptyBlog
+  )
+
+  if (
+    Object.entries(emptyBlog).toString() === Object.entries(result).toString()
+  )
+    return undefined
+
+  return result
+}
+
+export { dummy, totalLikes, favoriteBlog }

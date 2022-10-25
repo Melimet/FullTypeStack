@@ -33,17 +33,33 @@ function favoriteBlog(blogs: Blog[]) {
 function mostBlogs(blogs: Blog[]) {
   if (blogs.length === 0) return undefined
 
-  const [mostActiveBlogger] = Array.from(blogs.reduce(
-    (bloggers, current) =>
-      bloggers.set(
-        current.author,
-        bloggers.has(current.author) ? bloggers.get(current.author)! + 1 : 1
-      ),
-    new Map<string, number>()
-  )).sort((blog1, blog2) => blog2[1] - blog1[1])
-        console.log(mostActiveBlogger)
-  return {author: mostActiveBlogger[0], writtenBlogs: mostActiveBlogger[1]}
-
+  const [mostActiveBlogger] = Array.from(
+    blogs.reduce(
+      (bloggers, current) =>
+        bloggers.set(
+          current.author,
+          bloggers.has(current.author) ? bloggers.get(current.author)! + 1 : 1
+        ),
+      new Map<string, number>()
+    )
+  ).sort((blog1, blog2) => blog2[1] - blog1[1])
+  console.log(mostActiveBlogger)
+  return { author: mostActiveBlogger[0], writtenBlogs: mostActiveBlogger[1] }
 }
 
-export { dummy, totalLikes, favoriteBlog, mostBlogs}
+function mostLikes(blogs: Blog[]) {
+  if (blogs.length === 0) return undefined
+  
+  const [mostLikedBlogger] = Array.from(
+    blogs.reduce((bloggers, current) => 
+      bloggers.set(
+        current.author,
+        bloggers.has(current.author) ? bloggers.get(current.author)! + current.likes : current.likes
+      ),
+      new Map<string, number>()
+    )).sort((blog1, blog2) => blog2[1] - blog1[1])
+  
+        return {author: mostLikedBlogger[0], likes: mostLikedBlogger[1]}
+}
+
+export { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes}

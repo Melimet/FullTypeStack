@@ -1,5 +1,5 @@
 import { Blog } from "../types"
-import { dummy, favoriteBlog, mostBlogs, totalLikes } from "../utils/list_helper"
+import { dummy, favoriteBlog, mostBlogs, mostLikes, totalLikes } from "../utils/list_helper"
 import { blogs, listWithOneBlog } from "./testblogs"
 
 test("dummy returns one", () => {
@@ -55,5 +55,23 @@ describe("Most blogs", () => {
   test("with multiple blogs, blog with most likes is returned", () => {
     const result = mostBlogs(blogs)
     expect(result).toStrictEqual({author: "Robert C. Martin", writtenBlogs: 3})
+  })
+})
+
+describe("Most likes", () => {
+  test("with empty list, undefined is returned", () => {
+    const result = mostLikes([])
+    
+    expect(result).toBe(undefined)
+  })
+  test("with one blog, that blog is returned", () => {
+    const result = mostLikes(listWithOneBlog)
+
+    expect(result).toStrictEqual({author: "Edsger W. Dijkstra", likes: 5})
+  })
+  test("with multiple blogs, blog with most likes is returned", () => {
+    const result = mostLikes(blogs)
+
+    expect(result).toStrictEqual({"author": "Edsger W. Dijkstra", "likes": 17})
   })
 })

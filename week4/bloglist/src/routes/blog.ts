@@ -1,5 +1,6 @@
 import express from "express"
 import { Blog } from "../models/blog"
+import { validateBlog } from "../utils/blog_validator"
 
 const blogRouter = express.Router()
 
@@ -9,12 +10,14 @@ blogRouter.get("/", (_request, response) => {
   })
 })
 
-blogRouter.post("/", (request, response) => {
-  const blog = new Blog(request.body)
+blogRouter.post("/", async (request, response) => {
+  const blogValidate = validateBlog(request.body)
+  if (!blogValidate) return response.status(400).end()
 
-  blog.save().then((result) => {
-    response.status(201).json(result)
-  })
+  const blog = new Blog(blogValidate)
+
+  const savedBlog = await blog.save()
+  return response.status(201).json(savedBlog)
 })
 
 export { blogRouter }

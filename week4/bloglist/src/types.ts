@@ -1,8 +1,7 @@
-export interface Blog{
-  _id: string
+export interface BlogType{
+  id: string
   title: string
   author: string
   url: string
   likes: number
-  __v: number 
 }

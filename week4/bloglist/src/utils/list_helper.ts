@@ -1,24 +1,23 @@
-import { Blog } from "../types"
+import { BlogType } from "../types"
 
-const dummy = (blogs: Blog[]) => {
+const dummy = (blogs: BlogType[]) => {
   console.log(blogs)
   return 1
 }
 
-function totalLikes(blogs: Blog[]) {
+function totalLikes(blogs: BlogType[]) {
   return blogs.reduce((sum, current) => sum + current.likes, 0)
 }
 
-function favoriteBlog(blogs: Blog[]) {
+function favoriteBlog(blogs: BlogType[]) {
   if (blogs.length === 0) return undefined
 
-  const emptyBlog: Blog = {
-    _id: "",
+  const emptyBlog: BlogType = {
+    id: "",
     title: "",
     author: "",
     url: "",
     likes: -Infinity,
-    __v: 0,
   }
 
   const result = blogs.reduce(
@@ -30,7 +29,7 @@ function favoriteBlog(blogs: Blog[]) {
   return result
 }
 
-function mostBlogs(blogs: Blog[]) {
+function mostBlogs(blogs: BlogType[]) {
   if (blogs.length === 0) return undefined
 
   const [mostActiveBlogger] = Array.from(
@@ -47,7 +46,7 @@ function mostBlogs(blogs: Blog[]) {
   return { author: mostActiveBlogger[0], writtenBlogs: mostActiveBlogger[1] }
 }
 
-function mostLikes(blogs: Blog[]) {
+function mostLikes(blogs: BlogType[]) {
   if (blogs.length === 0) return undefined
   
   const [mostLikedBlogger] = Array.from(

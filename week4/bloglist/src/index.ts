@@ -1,15 +1,10 @@
-import express from "express"
-const app = express()
-import cors from "cors"
-import { blogRouter } from "./routes/blog"
+import {app} from "./app"
 import { PORT } from "./utils/config"
+import http from "http"
 
+const server = http.createServer(app)
 
-app.use(cors())
-app.use(express.json())
-
-app.use("/api/blogs", blogRouter)
-
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+

@@ -16,7 +16,7 @@ afterAll(() => {
   mongoose.connection.close()
 })
 
-describe("Blog-api get", () => {
+describe("Blog-api requests", () => {
   test("notes are returned as json", async () => {
     await api
       .get("/api/blogs")
@@ -47,5 +47,17 @@ describe("Blog-api get", () => {
 
     const response = await api.post("/api/blogs").send(newBlog).expect(201)
     expect(response.body.author).toContain("Test author")
+  })
+
+  test("If likes is undefined, it is set to 0", async () => {
+    const newBlog = {
+      title: "test",
+      author: "test",
+      url: "test",
+      id:"test_id",
+    }
+
+    const response = await api.post("/api/blogs").send(newBlog).expect(201)
+    expect(response.body.likes).toBe(0)
   })
 })

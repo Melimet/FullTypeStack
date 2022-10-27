@@ -4,6 +4,7 @@ import { app } from "../app"
 import { Blog } from "../models/blog"
 import { blogs } from "./testblogs"
 import { BlogType } from "../types"
+import { blogsInDb } from "./helpers/test_helper"
 
 const api = supertest(app)
 
@@ -42,7 +43,6 @@ describe("Blog-api requests", () => {
       author: "Test author",
       url: "Test url",
       likes: 0,
-      id: "Test id",
     }
 
     const response = await api.post("/api/blogs").send(newBlog).expect(201)
@@ -66,5 +66,18 @@ describe("Blog-api requests", () => {
       author:"test"
     }
    await api.post("/api/blogs").send(newFaultyBlog).expect(400)
+  })
+  describe("Delete requests", () => {
+    test("with correct id, correct blog is removed", async () => {
+      const allBlogs = await blogsInDb()
+
+      await api.delete(`/api/blogs/${allBlogs[0].id}`).expect(204)
+      
+      expect(await blogsInDb()).toHaveLength(blogs.length -1)
+    })
+    test("with incorrect id, nothing is deleted and 404 is returned", async () => {
+      await api.delete("/api/blogs/635a4289fea468f7a3d9566b").expect(404) //incorrect id
+      expect(await blogsInDb()).toHaveLength(blogs.length)
+    })
   })
 })

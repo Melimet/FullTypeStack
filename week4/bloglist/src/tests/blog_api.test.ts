@@ -54,7 +54,7 @@ describe("Blog-api requests", () => {
       title: "test",
       author: "test",
       url: "test",
-      id:"test_id",
+      id: "test_id",
     }
 
     const response = await api.post("/api/blogs").send(newBlog).expect(201)
@@ -63,21 +63,52 @@ describe("Blog-api requests", () => {
 
   test("If url or title is missing, 400 is returned", async () => {
     const newFaultyBlog = {
-      author:"test"
+      author: "test",
     }
-   await api.post("/api/blogs").send(newFaultyBlog).expect(400)
+    await api.post("/api/blogs").send(newFaultyBlog).expect(400)
   })
-  describe("Delete requests", () => {
+  describe("Delete request", () => {
     test("with correct id, correct blog is removed", async () => {
       const allBlogs = await blogsInDb()
 
-      await api.delete(`/api/blogs/${allBlogs[0].id}`).expect(204)
-      
-      expect(await blogsInDb()).toHaveLength(blogs.length -1)
+      await api.delete(`/api/blogs/${allBlogs[0].id}`).expect(200)
+
+      expect(await blogsInDb()).toHaveLength(blogs.length - 1)
     })
     test("with incorrect id, nothing is deleted and 404 is returned", async () => {
       await api.delete("/api/blogs/635a4289fea468f7a3d9566b").expect(404) //incorrect id
       expect(await blogsInDb()).toHaveLength(blogs.length)
+    })
+  })
+  describe("Put request", () => {
+    test("with correct id and parameters, resource is updated", async () => {
+      const allBlogs = await blogsInDb()
+      const updatedBlog = {
+        title: "testTitle",
+        author: "TestAuthor",
+        url: "testUrl",
+        likes: "235",
+      }
+
+      const response = await api
+        .put(`/api/blogs/${allBlogs[0].id}`)
+        .send(updatedBlog)
+        .expect(200)
+
+      expect(response.body.title).toStrictEqual("testTitle")
+    })
+
+    test("with incorrect id, nothing is updated", async () => {
+      const updatedBlog = {
+        title: "testTitle",
+        author: "TestAuthor",
+        url: "testUrl",
+        likes: "235",
+      }
+      await api
+        .put("/api/blogs/635a4289fea468f7a3d9566b")
+        .send(updatedBlog)
+        .expect(404) //incorrect id
     })
   })
 })

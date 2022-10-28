@@ -5,3 +5,9 @@ export interface BlogType{
   likes: number
   id?: string
 }
+
+export interface UserType{
+  username: string
+  name: string
+  id?: string
+}

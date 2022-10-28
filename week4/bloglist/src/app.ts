@@ -3,6 +3,7 @@ import cors from "cors"
 import { blogRouter } from "./routes/blog"
 import { MONGODB_URI } from "./utils/config"
 import mongoose from "mongoose"
+import { userRouter } from "./routes/user"
 require('express-async-errors')
 const app = express()
 mongoose
@@ -19,5 +20,6 @@ app.use(cors())
 app.use(express.json())
 
 app.use("/api/blogs", blogRouter)
+app.use("/api/users", userRouter)
 
 export {app}

@@ -1,18 +1,38 @@
-import { Request, Response } from "express";
+import { Request, Response } from "express"
+import { User } from "../models/user"
+import jwt from "jsonwebtoken"
 
 export interface CustomRequest extends Request {
   token: string
+  user: string
 }
 
-type Next = () => void | Promise<void>;
-
+type Next = () => void | Promise<void>
 
 function getTokenFrom(request: Request, _response: Response, next: Next) {
   const authorization = request.get("authorization")
   if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
-    (request as CustomRequest).token = authorization.substring(7)
+    ;(request as CustomRequest).token = authorization.substring(7)
   }
   next()
 }
 
-export {getTokenFrom}
+async function userExtractor(request: Request, response: Response, next: Next) {
+  const decodedToken = jwt.verify(
+    (request as CustomRequest).token,
+    process.env.SECRET as string
+  )
+
+  if (!decodedToken || typeof decodedToken === "string" || !decodedToken.id)
+    return response.status(401).json({ error: "token missing or invalid" })
+
+  const user = await User.findById(decodedToken.id)
+
+  if (!user?.id)
+    return response.status(400).json({ error: "User not found." });
+
+  (request as CustomRequest).user = user.id
+  next()
+}
+
+export { getTokenFrom, userExtractor }

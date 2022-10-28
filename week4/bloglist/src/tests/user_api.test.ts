@@ -20,7 +20,7 @@ afterAll(() => {
 })
 
 describe("User-requests", () => {
-  test("Users are returned as json", async () => { 
+  test("Users are returned as json", async () => {
     await api
       .get("/api/users")
       .expect(200)
@@ -36,6 +36,8 @@ describe("User-requests", () => {
       password: "asd123",
     }
     const response = await api.post("/api/users").send(user).expect(400)
-    expect(response.body).toEqual({ error: "Insufficient or invalid parameters." })
+    expect(response.body).toEqual({
+      error: "Insufficient or invalid parameters.",
+    })
   })
 })

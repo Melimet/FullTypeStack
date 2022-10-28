@@ -4,6 +4,7 @@ export interface BlogType{
   url: string
   likes: number
   id?: string
+  user?: string
 }
 
 export interface UserType{

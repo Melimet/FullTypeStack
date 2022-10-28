@@ -2,7 +2,7 @@ import { User } from "../models/user";
 import { NewUserType } from "../types";
 
 async function usersInDb() {
-  const users = await User.find({})
+  const users = await User.find({}).populate("blogs")
   return users.map((user) => user.toJSON())
 }
 
@@ -19,4 +19,4 @@ async function validateUser(maybeUser: NewUserType | undefined): Promise<NewUser
   return {username, name, password}
 }
 
-export {validateUser}
+export {validateUser, usersInDb}

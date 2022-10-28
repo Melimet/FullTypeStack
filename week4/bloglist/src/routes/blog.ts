@@ -1,23 +1,31 @@
 import express from "express"
 import { Blog } from "../models/blog"
+import { User } from "../models/user"
 import { BlogType } from "../types"
 import { validateBlog } from "../utils/blog_validator"
 
 const blogRouter = express.Router()
 
 blogRouter.get("/", (_request, response) => {
-  Blog.find({}).then((blogs) => {
-    response.json(blogs)
-  })
+  const blogs = await Blog.find({}).populate("user")
+  return response.json(blogs)
 })
 
 blogRouter.post("/", async (request, response) => {
   const blogValidate = validateBlog(request.body)
   if (!blogValidate) return response.status(400).end()
 
+  const user = await User.findById(request.body.user)
+
+  if (!user) return response.status(400).json({ error: "User not found." })
+
   const blog = new Blog(blogValidate)
 
   const savedBlog = await blog.save()
+
+  user.blogs = user.blogs.concat(savedBlog._id)
+
+  await user.save()
   return response.status(201).json(savedBlog)
 })
 

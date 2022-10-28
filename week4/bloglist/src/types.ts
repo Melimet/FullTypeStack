@@ -11,3 +11,9 @@ export interface UserType{
   name: string
   id?: string
 }
+
+export interface NewUserType{
+  username: string
+  name: string
+  password: string
+}

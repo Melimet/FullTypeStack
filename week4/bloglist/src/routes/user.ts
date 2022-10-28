@@ -1,6 +1,8 @@
 import express from "express"
 import bcrypt from "bcrypt"
 import { User } from "../models/user"
+import { validateUser } from "../utils/user_validator"
+import { NewUserType } from "../types"
 
 const userRouter = express.Router()
 
@@ -11,22 +13,22 @@ userRouter.get("/", async (_request, response) => {
 
 userRouter.post("/", async (request, response) => {
 
-  const { username, name, password } = request.body
+  const user: NewUserType | undefined = await validateUser(request.body)
   
 
-  if (!username || !name || !password) return response.status(400).end()
+  if (!user) return response.status(400).send({error: "Insufficient or invalid parameters."})
 
-  const passwordHash = await bcrypt.hash(password, 10)
+  const passwordHash = await bcrypt.hash(user.password, 10)
 
   const newUser = new User({
-    username,
-    name,
+    username: user.username,
+    name: user.name,
     passwordHash,
   })
 
   const createdUser = await newUser.save()
 
-  if (!createdUser) return response.status(400).end()
+  if (!createdUser) return response.status(400).send({ error: "Creation of user failed." })
   
   return response.status(201).json(createdUser)
 

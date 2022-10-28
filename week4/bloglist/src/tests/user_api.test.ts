@@ -37,7 +37,7 @@ describe("User-requests", () => {
     }
     const response = await api.post("/api/users").send(user).expect(400)
     expect(response.body).toEqual({
-      error: "Insufficient or invalid parameters.",
+      error: "Some of the parameters are missing.",
     })
   })
 })

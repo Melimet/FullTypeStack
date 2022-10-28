@@ -12,19 +12,16 @@ userRouter.get("/", async (_request, response) => {
 })
 
 userRouter.post("/", async (request, response) => {
-  const user: NewUserType | undefined = await validateUser(request.body)
+  const user: NewUserType | {error: string} = await validateUser(request.body)
 
-  if (!user)
-    return response
-      .status(400)
-      .send({ error: "Insufficient or invalid parameters." })
+  if ("error" in user) return response.status(400).json({ error: user.error })
 
   const passwordHash = await bcrypt.hash(user.password, 10)
 
   const newUser = new User({
     username: user.username,
     name: user.name,
-    passwordHash,
+    passwordHash: passwordHash,
   })
 
   const createdUser = await newUser.save()

@@ -9,7 +9,7 @@ export interface CustomRequest extends Request {
 
 type Next = () => void | Promise<void>
 
-function getTokenFrom(request: Request, _response: Response, next: Next) {
+function tokenExtractor(request: Request, _response: Response, next: Next) {
   const authorization = request.get("authorization")
   if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
     ;(request as CustomRequest).token = authorization.substring(7)
@@ -17,7 +17,9 @@ function getTokenFrom(request: Request, _response: Response, next: Next) {
   next()
 }
 
+//@ts-ignore:next-line Not All paths return a value
 async function userExtractor(request: Request, response: Response, next: Next) {
+  if (!(request as CustomRequest).token) return next()
   const decodedToken = jwt.verify(
     (request as CustomRequest).token,
     process.env.SECRET as string
@@ -35,4 +37,4 @@ async function userExtractor(request: Request, response: Response, next: Next) {
   next()
 }
 
-export { getTokenFrom, userExtractor }
+export { tokenExtractor, userExtractor }

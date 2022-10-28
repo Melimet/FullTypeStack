@@ -5,12 +5,39 @@ import { Blog } from "../models/blog"
 import { blogs } from "./testblogs"
 import { BlogType } from "../types"
 import { blogsInDb } from "./helpers/test_helper"
+import { User } from "../models/user"
 
 const api = supertest(app)
 
+async function logIn(username: string, password: string) {
+  const user = { username, password }
+  const response = await api.post("/api/login").send(user)
+
+  expect(response.status).toBe(200)
+
+  return response.body.token
+}
+
 beforeEach(async () => {
+  await User.deleteMany({})
+
   await Blog.deleteMany({})
-  await Blog.insertMany(blogs)
+  const newUser = {
+    username: "testuser",
+    name: "testname",
+    password: "testpassword",
+  }
+
+  const createdUser = await api
+    .post("/api/users")
+    .send(newUser)
+    .expect((response) => {
+      expect(response.body.username).toContain("testuser")
+    })
+
+  
+  const blogsWithId = blogs.map((blog) => ({...blog, user: createdUser.body.id}))
+  await Blog.insertMany(blogsWithId)
 })
 
 afterAll(() => {
@@ -44,8 +71,12 @@ describe("Blog-api requests", () => {
       url: "Test url",
       likes: 0,
     }
-
-    const response = await api.post("/api/blogs").send(newBlog).expect(201)
+    const token = "bearer " + (await logIn("testuser", "testpassword"))
+    const response = await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .set({ Authorization: token })
+      .expect(201)
     expect(response.body.author).toContain("Test author")
   })
 
@@ -56,8 +87,12 @@ describe("Blog-api requests", () => {
       url: "test",
       id: "test_id",
     }
-
-    const response = await api.post("/api/blogs").send(newBlog).expect(201)
+    const token = "bearer " + (await logIn("testuser", "testpassword"))
+    const response = await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .set({ Authorization: token })
+      .expect(201)
     expect(response.body.likes).toBe(0)
   })
 
@@ -65,18 +100,45 @@ describe("Blog-api requests", () => {
     const newFaultyBlog = {
       author: "test",
     }
-    await api.post("/api/blogs").send(newFaultyBlog).expect(400)
+    const token = "bearer " + (await logIn("testuser", "testpassword"))
+    await api
+      .post("/api/blogs")
+      .send(newFaultyBlog)
+      .set({ Authorization: token })
+      .expect(400)
   })
+  test("If no token is provided, 401 is returned", async () => {
+    const newBlog = {
+      title: "test",
+      author: "test",
+      url: "test",
+      id: "test_id",
+    }
+
+    await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .expect(401)
+  })
+  
   describe("Delete request", () => {
     test("with correct id, correct blog is removed", async () => {
       const allBlogs = await blogsInDb()
-
-      await api.delete(`/api/blogs/${allBlogs[0].id}`).expect(200)
+      const token = "bearer " + (await logIn("testuser", "testpassword"))
+      await api
+        .delete(`/api/blogs/${allBlogs[0].id}`)
+        .set({ Authorization: token })
+        .expect(200)
 
       expect(await blogsInDb()).toHaveLength(blogs.length - 1)
     })
     test("with incorrect id, nothing is deleted and 404 is returned", async () => {
-      await api.delete("/api/blogs/635a4289fea468f7a3d9566b").expect(404) //incorrect id
+      
+      const token = "bearer " + await logIn("testuser", "testpassword")
+
+      await api.delete("/api/blogs/635a4289fea468f7a3d9566b")
+        .set({ Authorization: token })
+        .expect(404) //incorrect id
       expect(await blogsInDb()).toHaveLength(blogs.length)
     })
   })

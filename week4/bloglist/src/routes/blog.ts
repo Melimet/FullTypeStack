@@ -3,10 +3,12 @@ import { Blog } from "../models/blog"
 import { User } from "../models/user"
 import { BlogType } from "../types"
 import { validateBlog } from "../utils/blog_validator"
+import jwt from "jsonwebtoken"
+import { CustomRequest } from "../utils/tokenProcessing"
 
 const blogRouter = express.Router()
 
-blogRouter.get("/", (_request, response) => {
+blogRouter.get("/", async (_request, response) => {
   const blogs = await Blog.find({}).populate("user")
   return response.json(blogs)
 })
@@ -15,7 +17,15 @@ blogRouter.post("/", async (request, response) => {
   const blogValidate = validateBlog(request.body)
   if (!blogValidate) return response.status(400).end()
 
-  const user = await User.findById(request.body.user)
+  const decodedToken = jwt.verify(
+    (request as CustomRequest).token,
+    process.env.SECRET as string
+  )
+
+  if (!decodedToken || typeof decodedToken === "string" || !decodedToken.id)
+    return response.status(401).json({ error: "token missing or invalid" })
+
+  const user = await User.findById(decodedToken.id)
 
   if (!user) return response.status(400).json({ error: "User not found." })
 

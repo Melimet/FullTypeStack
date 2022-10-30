@@ -1,10 +1,10 @@
-import { BlogType } from "../types";
+import { BlogType } from "../types"
 
 interface BlogProps {
   blog: BlogType
 }
 
-function Blog({ blog }: BlogProps ) {
+function Blog({ blog }: BlogProps) {
   return (
     <div>
       <h3>{blog.title}</h3>
@@ -13,4 +13,4 @@ function Blog({ blog }: BlogProps ) {
   )
 }
 
-export default Blog;
+export default Blog

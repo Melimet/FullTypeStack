@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import "./App.css"
 import Blog from "./components/Blog"
 import blogService from "./services/blogs"
 import { BlogType } from "./types"

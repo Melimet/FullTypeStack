@@ -5,3 +5,9 @@ export interface BlogType {
   url: string
   likes: number
 }
+
+export interface UserType {
+  username: string
+  name: string
+  token: string
+}

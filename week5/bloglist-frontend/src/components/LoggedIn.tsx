@@ -1,16 +1,21 @@
 import newBlog from "../services/newBlog"
-import { UserType } from "../types"
+import { UserType, Notification } from "../types"
 
 type LoggedInProps = {
   user: UserType
   setUser: React.Dispatch<React.SetStateAction<UserType | undefined>>
+  setNotification: React.Dispatch<React.SetStateAction<Notification>>
 }
 
-function LoggedIn({user, setUser}: LoggedInProps) {
+function LoggedIn({user, setUser, setNotification}: LoggedInProps) {
 
   function handleLogout() {
     window.localStorage.removeItem("loggedUser")
     setUser(undefined)
+    setNotification({
+      message: "logged out",
+      success: true
+    })    
     newBlog.setToken("")
   }
 

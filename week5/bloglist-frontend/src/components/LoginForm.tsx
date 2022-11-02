@@ -1,13 +1,15 @@
-import React from "react";
+import React from "react"
 import { useState } from "react"
 import login from "../services/login"
-import { UserType } from "../types";
+import { UserType } from "../types"
+import { Notification } from "../types"
 
-type LoginFormProps =
-  { setUser: React.Dispatch<React.SetStateAction<UserType | undefined>>; }
+type LoginFormProps = {
+  setNotification: React.Dispatch<React.SetStateAction<Notification>>
+  setUser: React.Dispatch<React.SetStateAction<UserType | undefined>>
+}
 
-
-function LoginForm({setUser}: LoginFormProps) {
+function LoginForm({ setUser, setNotification }: LoginFormProps) {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
@@ -17,14 +19,20 @@ function LoginForm({setUser}: LoginFormProps) {
     try {
       const user = await login({ username, password })
 
-      window.localStorage.setItem(
-        "loggedUser", JSON.stringify(user)
-      )
+      window.localStorage.setItem("loggedUser", JSON.stringify(user))
 
       setUser(user)
       setUsername("")
       setPassword("")
+      setNotification({
+        message: "Login successful",
+        success: true,
+      })
     } catch (exception) {
+      setNotification({
+        message: "Username and/or password incorrect",
+        success: false,
+      })
       console.log("error in logging in ")
     }
   }

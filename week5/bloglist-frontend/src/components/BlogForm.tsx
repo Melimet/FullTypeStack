@@ -1,23 +1,27 @@
 import React, { useState } from "react"
 import newBlog from "../services/newBlog"
-import { BlogType, UserType } from "../types"
+import { BlogType, Notification } from "../types"
 
 type BlogFormProps = {
   blogs: BlogType[]
   setBlogs: React.Dispatch<React.SetStateAction<BlogType[]>>
+  setNotification: React.Dispatch<React.SetStateAction<Notification>>
 }
 
-function BlogForm({ blogs, setBlogs }: BlogFormProps) {
+function BlogForm({ blogs, setBlogs, setNotification }: BlogFormProps) {
   const [author, setAuthor] = useState("")
   const [title, setTitle] = useState("")
   const [url, setUrl] = useState("")
 
-  async function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent): Promise<void> {
     event.preventDefault()
     const result = await newBlog.createBlog({ author, title, url })
 
+    setNotification({
+      message: `Creation of ${result.title} successful`,
+      success: true,
+    })
     setBlogs(blogs.concat(result))
-    return result
   }
 
   return (

@@ -8,10 +8,11 @@ function setToken(newToken: string) {
   token = `bearer ${newToken}`
 }
 
-
-async function createBlog(newBlog: Omit<BlogType, "likes" | "id">): Promise<BlogType> {
+async function createBlog(
+  newBlog: Omit<BlogType, "likes" | "id">
+): Promise<BlogType> {
   const config = {
-    headers: { Authorization: token }
+    headers: { Authorization: token },
   }
 
   const request = await axios.post(baseUrl, newBlog, config)

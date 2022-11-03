@@ -1,4 +1,4 @@
-import { BlogType } from "../types"
+import { BlogType, UserType } from "../types"
 import "../index.css"
 import { useState } from "react"
 import blogService from "../services/blogs"
@@ -7,10 +7,10 @@ interface BlogProps {
   blog: BlogType
   updateBlog: (blog: BlogType) => void
   removeBlog: (blog: BlogType) => void
+  blogIsByLoggedUser: (blogUser: UserType) => boolean
 }
 
-function Blog({ blog, updateBlog, removeBlog }: BlogProps) {
-
+function Blog({ blog, updateBlog, removeBlog, blogIsByLoggedUser }: BlogProps) {
   const [visible, setVisible] = useState(false)
 
   function toggleVisibility() {
@@ -32,16 +32,20 @@ function Blog({ blog, updateBlog, removeBlog }: BlogProps) {
   return (
     <div className="blog">
       <h3>{blog.title}</h3>
-      {!visible &&
-        <button onClick={toggleVisibility}>show</button>}
-      {visible &&<>
-        <p>By: {blog.author}</p>
-        <p>url: {blog.url}</p>
-        <p>likes: {blog.likes} <button onClick={newLike}>like</button></p>
-        <button onClick={toggleVisibility}>hide</button>
-        <button onClick={handleDelete}>delete</button>
+      {!visible && <button onClick={toggleVisibility}>show</button>}
+      {visible && (
+        <>
+          <p>By: {blog.author}</p>
+          <p>url: {blog.url}</p>
+          <p>
+            likes: {blog.likes} <button onClick={newLike}>like</button>
+          </p>
+          <button onClick={toggleVisibility}>hide</button>
+          {blog.user && blogIsByLoggedUser(blog.user as UserType) && (
+            <button onClick={handleDelete}>delete</button>
+          )}
         </>
-      }
+      )}
     </div>
   )
 }

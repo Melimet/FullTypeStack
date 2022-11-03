@@ -29,6 +29,10 @@ function App() {
     }
   }, [])
 
+  function blogIsByLoggedUser(blogUser: UserType) {
+    return (blogUser.id === user?.id)
+  }
+
   if (!user) {
     return (
       <div>
@@ -49,7 +53,7 @@ function App() {
         user={user}
         setUser={setUser}
       />
-      <Blogs setNotification={setNotification}/>
+      <Blogs blogIsByLoggedUser={blogIsByLoggedUser} setNotification={setNotification}/>
     </div>
   )
 }

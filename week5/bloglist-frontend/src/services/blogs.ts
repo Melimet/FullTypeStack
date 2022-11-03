@@ -19,13 +19,13 @@ async function addLike(blog: BlogType) {
 }
 
 async function deleteBlog(blog: BlogType) {
-
+  console.log(blog.user)
   const config = {
-    headers: { Authorization: newBlogService.token },
+    headers: { Authorization: newBlogService.getToken() },
   }
-
   const request = await axios.delete(`${baseUrl}/${blog.id}`, config)
   return request.data
+
 }
 
 export default { getAll, addLike, deleteBlog }

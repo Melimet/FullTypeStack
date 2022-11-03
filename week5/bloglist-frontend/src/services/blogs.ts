@@ -1,5 +1,5 @@
 import axios from "axios"
-import { BlogType } from "../types"
+import { BlogType, UserType } from "../types"
 const baseUrl = "http://localhost:3003/api/blogs"
 
 async function getAll(): Promise<BlogType[]> {
@@ -8,7 +8,11 @@ async function getAll(): Promise<BlogType[]> {
 }
 
 async function addLike(blog: BlogType) {
-  blog.likes++ 
+  blog.likes++
+
+  if (typeof blog.user === "string") return undefined
+  blog.user = blog.user?.id
+
   const request = await axios.put(`${baseUrl}/${blog.id}`, blog)
   return request.data
 }

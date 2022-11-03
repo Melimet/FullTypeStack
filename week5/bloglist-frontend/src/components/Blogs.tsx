@@ -36,7 +36,7 @@ function Blogs({ setNotification }: BlogsProps) {
         />
       </Togglable>
       <main className="flex-wrapper">
-        {blogs.map((blog) => (
+        {blogs.sort((a, b) => b.likes - a.likes).map((blog) => (
           <Blog key={blog.id} updateBlog={updateBlog} blog={blog} />
         ))}
       </main>

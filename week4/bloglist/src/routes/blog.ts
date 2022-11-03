@@ -38,9 +38,11 @@ blogRouter.post("/", userExtractor, async (request, response) => {
 blogRouter.delete("/:id", userExtractor, async (request: Request, response) => {
   const idToBeDeleted: string | undefined = request.params.id
   if (!idToBeDeleted) return response.status(400).end()
+  console.log("headers", request.headers.authorization)
 
   const blog = await Blog.findById(idToBeDeleted)
   const user = await User.findById((request as CustomRequest).user)
+
   if (!blog || !user) return response.status(404).end()
 
   if (blog.user.toString() !== user.id.toString()) {
@@ -64,7 +66,7 @@ blogRouter.put("/:id", async (request, response) => {
   })
 
   if (!result) return response.status(404).end()
-
+  await result.save()
   return response.status(200).json(result)
 })
 

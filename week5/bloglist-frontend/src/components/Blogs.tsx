@@ -26,6 +26,11 @@ function Blogs({ setNotification }: BlogsProps) {
     setBlogs(newBlogs.concat(blog))
   }
 
+  function removeBlog(blog: BlogType) {
+    const newBlogs = blogs.filter(b => b.id !== blog.id)
+    setBlogs(newBlogs)
+  }
+
   return (
     <div>
       <Togglable buttonLabel="New Blog">
@@ -37,7 +42,7 @@ function Blogs({ setNotification }: BlogsProps) {
       </Togglable>
       <main className="flex-wrapper">
         {blogs.sort((a, b) => b.likes - a.likes).map((blog) => (
-          <Blog key={blog.id} updateBlog={updateBlog} blog={blog} />
+          <Blog key={blog.id} updateBlog={updateBlog} removeBlog={removeBlog} blog={blog} />
         ))}
       </main>
     </div>

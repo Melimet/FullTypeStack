@@ -2,7 +2,7 @@ import axios from "axios"
 import { BlogType } from "../types"
 const baseUrl = "http://localhost:3003/api/blogs"
 
-let token = ""
+export let token = ""
 
 function setToken(newToken: string) {
   token = `bearer ${newToken}`
@@ -20,4 +20,4 @@ async function createBlog(
   return request.data
 }
 
-export default { createBlog, setToken }
+export default { createBlog, setToken, token }

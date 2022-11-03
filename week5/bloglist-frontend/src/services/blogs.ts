@@ -1,5 +1,6 @@
 import axios from "axios"
-import { BlogType, UserType } from "../types"
+import { BlogType } from "../types"
+import newBlogService from "./newBlog"
 const baseUrl = "http://localhost:3003/api/blogs"
 
 async function getAll(): Promise<BlogType[]> {
@@ -17,4 +18,14 @@ async function addLike(blog: BlogType) {
   return request.data
 }
 
-export default { getAll, addLike }
+async function deleteBlog(blog: BlogType) {
+
+  const config = {
+    headers: { Authorization: newBlogService.token },
+  }
+
+  const request = await axios.delete(`${baseUrl}/${blog.id}`, config)
+  return request.data
+}
+
+export default { getAll, addLike, deleteBlog }

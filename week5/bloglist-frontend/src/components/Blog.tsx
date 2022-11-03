@@ -1,16 +1,24 @@
 import { BlogType } from "../types"
 import "../index.css"
 import { useState } from "react"
+import blogService from "../services/blogs"
+
 interface BlogProps {
   blog: BlogType
+  updateBlog: (blog: BlogType) => void
 }
 
-function Blog({ blog }: BlogProps) {
+function Blog({ blog, updateBlog }: BlogProps) {
 
   const [visible, setVisible] = useState(false)
 
   function toggleVisibility() {
     setVisible(!visible)
+  }
+
+  async function newLike() {
+    const result = await blogService.addLike(blog)
+    updateBlog(result)
   }
 
   return (
@@ -20,7 +28,8 @@ function Blog({ blog }: BlogProps) {
         <button onClick={toggleVisibility}>show</button>}
       {visible &&<>
         <p>By: {blog.author}</p>
-        <p>{blog.url}</p>
+        <p>url: {blog.url}</p>
+        <p>likes: {blog.likes} <button onClick={newLike}>like</button></p>
         <button onClick={toggleVisibility}>hide</button>
         </>
       }

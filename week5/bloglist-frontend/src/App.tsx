@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react"
-import Blog from "./components/Blog"
+
 import BlogForm from "./components/BlogForm"
 import LoggedIn from "./components/LoggedIn"
 import LoginForm from "./components/LoginForm"
-import blogService from "./services/blogs"
 import newBlog from "./services/newBlog"
 import { BlogType, Notification as NotificationType, UserType } from "./types"
 import "./index.css"
 import Notification from "./components/Notification"
 import Togglable from "./components/Togglable"
+import Blogs from "./components/Blogs"
 
 function App() {
-  const [blogs, setBlogs] = useState<BlogType[]>([])
+  
   const [user, setUser] = useState<UserType | undefined>()
   const [notification, setNotification] = useState<NotificationType>({
     message: "",
@@ -19,11 +19,7 @@ function App() {
   })
 
   useEffect(() => {
-    fetchBlogs()
-    async function fetchBlogs() {
-      const blogs = await blogService.getAll()
-      setBlogs(blogs)
-    }
+
 
     const loggedUser = window.localStorage.getItem("loggedUser")
     if (loggedUser) {
@@ -53,18 +49,7 @@ function App() {
         user={user}
         setUser={setUser}
       />
-      <Togglable buttonLabel="New Blog">
-        <BlogForm
-          setNotification={setNotification}
-          blogs={blogs}
-          setBlogs={setBlogs}
-        />
-      </Togglable>
-      <main className="flex-wrapper">
-        {blogs.map((blog) => (
-          <Blog key={blog.id} blog={blog} />
-        ))}
-      </main>
+      <Blogs setNotification={setNotification}/>
     </div>
   )
 }

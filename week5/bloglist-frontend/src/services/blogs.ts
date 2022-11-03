@@ -7,4 +7,10 @@ async function getAll(): Promise<BlogType[]> {
   return request.data
 }
 
-export default { getAll }
+async function addLike(blog: BlogType) {
+  blog.likes++ 
+  const request = await axios.put(`${baseUrl}/${blog.id}`, blog)
+  return request.data
+}
+
+export default { getAll, addLike }

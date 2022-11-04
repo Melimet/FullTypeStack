@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react"
-
-import BlogForm from "./components/BlogForm"
 import LoggedIn from "./components/LoggedIn"
 import LoginForm from "./components/LoginForm"
 import newBlog from "./services/newBlog"
-import { BlogType, Notification as NotificationType, UserType } from "./types"
+import { Notification as NotificationType, UserType } from "./types"
 import "./index.css"
 import Notification from "./components/Notification"
 import Togglable from "./components/Togglable"

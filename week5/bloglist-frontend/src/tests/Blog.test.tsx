@@ -3,8 +3,10 @@ import { render, screen } from "@testing-library/react"
 import React from "react"
 import Blog from "../components/Blog"
 import { BlogType, UserType } from "../types"
+import userEvent from '@testing-library/user-event'
 
-test("Blog only renders title", () => {
+
+describe("Blog", () => {
   const blog: BlogType = {
     title: "testTitle",
     url: "url",
@@ -12,16 +14,30 @@ test("Blog only renders title", () => {
     id: "123",
     author: "testAuthor",
   }
-// @ts-ignore
-  render(<Blog blog={blog} />)
- 
-  const title = screen.getByText("testTitle")
-  expect(title).toBeDefined()
 
-  const author = screen.queryByText("testAuthor")
-  expect(author).toBeNull()
+  test("only renders title", () => {
+    // @ts-ignore
+    render(<Blog blog={blog} />)
 
+    const title = screen.getByText("testTitle")
+    expect(title).toBeDefined()
 
+    const author = screen.queryByText("testAuthor")
+    expect(author).toBeNull()
+  })
+  test("after click, all values are rendered", async () => {
+    //const mockHandler = jest.fn()
+
+    // @ts-ignore
+    render(<Blog blog={blog} /> )
+
+    const user = userEvent.setup()
+    const button = screen.getByText('show')
+
+    await user.click(button)
+
+    const author = screen.queryByText("testAuthor")
+    expect(author).toBeDefined()
+
+  })
 })
-
-

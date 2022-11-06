@@ -17,7 +17,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "hacktest": "jest",
     "eject": "react-scripts eject",
     "lint": "eslint './src/**/*.{ts,tsx}' --fix"
   },

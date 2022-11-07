@@ -17,8 +17,6 @@ function App() {
   })
 
   useEffect(() => {
-
-
     const loggedUser = window.localStorage.getItem("loggedUser")
     if (loggedUser) {
       const parsedUser = JSON.parse(loggedUser)

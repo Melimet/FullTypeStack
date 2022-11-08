@@ -15,6 +15,7 @@ function Blog({ blog, updateBlog, removeBlog, blogIsByLoggedUser }: BlogProps) {
 
   function toggleVisibility() {
     setVisible(!visible)
+    
   }
 
   async function newLike() {

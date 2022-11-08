@@ -14,14 +14,22 @@ function BlogForm({ blogs, setBlogs, setNotification }: BlogFormProps) {
   const [url, setUrl] = useState("")
 
   async function handleSubmit(event: React.FormEvent): Promise<void> {
-    event.preventDefault()
-    const result = await newBlog.createBlog({ author, title, url })
+    try {
+      event.preventDefault()
+      const result = await newBlog.createBlog({ author, title, url })
 
-    setNotification({
-      message: `Creation of ${result.title} successful`,
-      success: true,
-    })
-    setBlogs(blogs.concat(result))
+      setNotification({
+        message: `Creation of ${result.title} successful`,
+        success: true,
+      })
+      setBlogs(blogs.concat(result))
+    } catch (error: unknown) {
+      
+      setNotification({
+        message: `Error: ${error instanceof Error ? error.message : ""}`, 
+        success: false
+      })
+    }
   }
 
   return (
@@ -30,6 +38,7 @@ function BlogForm({ blogs, setBlogs, setNotification }: BlogFormProps) {
       <label htmlFor="title">
         Title{" "}
         <input
+          id="title"
           type="text"
           name="Title"
           onChange={({ target }) => setTitle(target.value)}
@@ -38,6 +47,7 @@ function BlogForm({ blogs, setBlogs, setNotification }: BlogFormProps) {
       <label htmlFor="author">
         Author{" "}
         <input
+          id="author"
           type="text"
           name="Author"
           onChange={({ target }) => setAuthor(target.value)}
@@ -46,13 +56,14 @@ function BlogForm({ blogs, setBlogs, setNotification }: BlogFormProps) {
       <label htmlFor="url">
         Url{" "}
         <input
+          id="url"
           type="text"
           name="Url"
           onChange={({ target }) => setUrl(target.value)}
         />
       </label>
 
-      <button type="submit" onClick={handleSubmit}>
+      <button id="submitBlog" type="submit" onClick={handleSubmit}>
         create
       </button>
     </form>

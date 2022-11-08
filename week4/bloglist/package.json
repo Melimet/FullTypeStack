@@ -5,7 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
-    "dev": "cross-env NODE_ENV=development ts-node-dev src/index.ts"
+    "dev": "cross-env NODE_ENV=development ts-node-dev src/index.ts",
+    "start:test": "cross-env NODE_ENV=test ts-node src/index.ts"
   },
   "author": "",
   "license": "ISC",

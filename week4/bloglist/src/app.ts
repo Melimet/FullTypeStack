@@ -6,6 +6,7 @@ import mongoose from "mongoose"
 import { userRouter } from "./routes/user"
 import { loginRouter } from "./routes/login"
 import { tokenExtractor } from "./utils/tokenProcessing"
+
 require('express-async-errors')
 const app = express()
 mongoose
@@ -26,4 +27,8 @@ app.use("/api/blogs", blogRouter)
 app.use("/api/users", userRouter)
 app.use("/api/login", loginRouter)
 
+if (process.env.NODE_ENV === "test") {
+  const testRouter = require("./routes/testRoute")
+  app.use("/api/testRoute", testRouter)
+}
 export {app}

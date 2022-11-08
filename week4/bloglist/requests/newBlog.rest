@@ -4,6 +4,5 @@ Content-Type: application/json
 {
   "author":"filler mc biller",
   "url":"www.com",
-  "title":"How to be confident",
-  
+  "title":"How to be confident", 
 }

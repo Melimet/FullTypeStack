@@ -15,7 +15,6 @@ function Blog({ blog, updateBlog, removeBlog, blogIsByLoggedUser }: BlogProps) {
 
   function toggleVisibility() {
     setVisible(!visible)
-
   }
 
   async function newLike() {
@@ -33,17 +32,22 @@ function Blog({ blog, updateBlog, removeBlog, blogIsByLoggedUser }: BlogProps) {
   return (
     <div className="blog">
       <h3>{blog.title}</h3>
-      {!visible && <button onClick={toggleVisibility}>show</button>}
+      {!visible && <button id="show" onClick={toggleVisibility}>show</button>}
       {visible && (
         <>
           <p>By: {blog.author}</p>
           <p>url: {blog.url}</p>
           <p>
-            likes: {blog.likes} <button id="likeButton" onClick={newLike}>like</button>
+            likes: {blog.likes}{" "}
+            <button id="likeButton" onClick={newLike}>
+              like
+            </button>
           </p>
-          <button onClick={toggleVisibility}>hide</button>
+          <button id="hide" onClick={toggleVisibility}>hide</button>
           {blog.user && blogIsByLoggedUser(blog.user as UserType) && (
-            <button id="deleteButton" onClick={handleDelete}>delete</button>
+            <button id="deleteButton" onClick={handleDelete}>
+              delete
+            </button>
           )}
         </>
       )}

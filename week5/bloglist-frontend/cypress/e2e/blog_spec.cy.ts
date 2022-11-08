@@ -64,6 +64,30 @@ describe('Blog app', function () {
 
         cy.contains("Creation of testTitle successful")
       })
+
+      describe("Created blogs", function () {
+        beforeEach(function () {
+
+          const token = JSON.parse(localStorage.getItem("loggedUser") as string).token
+          if(!token) throw new Error
+
+          cy.request({
+            method: "POST", url: "http://localhost:3003/api/blogs",
+            body: {
+            title: "testTitle", author: "testAuthor", url: "testUrl"
+            },
+            headers: {
+              "Authorization": `bearer ${token}`
+            }
+          })
+          cy.visit("http://localhost:3000")
+        })
+        it("can be liked", function () {
+          cy.contains("show").click()
+          cy.get("#likeButton").click()
+          cy.contains("likes: 1")
+        })
+      })
     })
   })
 })

@@ -43,7 +43,7 @@ function Blog({ blog, updateBlog, removeBlog, blogIsByLoggedUser }: BlogProps) {
           </p>
           <button onClick={toggleVisibility}>hide</button>
           {blog.user && blogIsByLoggedUser(blog.user as UserType) && (
-            <button onClick={handleDelete}>delete</button>
+            <button id="deleteButton" onClick={handleDelete}>delete</button>
           )}
         </>
       )}

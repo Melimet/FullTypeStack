@@ -87,6 +87,11 @@ describe('Blog app', function () {
           cy.get("#likeButton").click()
           cy.contains("likes: 1")
         })
+        it("can be deleted", function () {
+          cy.contains("show").click()
+          cy.get("#deleteButton").click()
+          cy.get('html').should('not.contain', "testTitle")
+        })
       })
     })
   })

@@ -4,7 +4,7 @@ import React from "react"
 import Blog from "../components/Blog"
 import { BlogType, UserType } from "../types"
 import userEvent from '@testing-library/user-event'
-
+import { expect } from '@jest/globals';
 
 describe("Blog", () => {
   const blog: BlogType = {

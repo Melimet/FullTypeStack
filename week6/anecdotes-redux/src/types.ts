@@ -6,6 +6,7 @@ interface AnecdoteType {
 
 interface StateType {
   anecdotes: AnecdoteType[]
+  notifications: string
 }
 
 export type { AnecdoteType, StateType }

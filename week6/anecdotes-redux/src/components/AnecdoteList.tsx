@@ -5,7 +5,6 @@ import Anecdote from "./Anecdote"
 function AnecdoteList() {
   const anecdotes = useSelector((state: StateType) => state.anecdotes)
 
-
   return (
     <div>
       {[...anecdotes]

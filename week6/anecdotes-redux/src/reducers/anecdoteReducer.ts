@@ -24,10 +24,22 @@ function addLike(id: string) {
   }
 }
 
+function newAnecdote(content: string) {
+  return {
+    type: "NEW_ANECDOTE",
+    data: {
+      content,
+    },
+  }
+}
+
 const initialState = anecdotesAtStart.map(asObject)
 interface Action {
   type: string
-  data: { id: string }
+  data: {
+    id: string
+    content: string
+  }
 }
 
 const reducer = (state = initialState, action: Action) => {
@@ -39,9 +51,15 @@ const reducer = (state = initialState, action: Action) => {
       const anecdote = state.find((anec) => anec.id === action.data.id)
       if (!anecdote) return state
       const updatedAnecdote = { ...anecdote, votes: anecdote.votes + 1 }
-      const filteredState = state.filter((anec) => anec.id !== updatedAnecdote.id)
-      return [ ...filteredState, updatedAnecdote ] 
-      
+      const filteredState = state.filter(
+        (anec) => anec.id !== updatedAnecdote.id
+      )
+      return [...filteredState, updatedAnecdote]
+
+    case "NEW_ANECDOTE":
+      const newAnecdote = asObject(action.data.content)
+
+      return [...state, newAnecdote]
 
     default:
       return state
@@ -49,4 +67,4 @@ const reducer = (state = initialState, action: Action) => {
 }
 
 export default reducer
-export { addLike }
+export { addLike, newAnecdote }

@@ -6,7 +6,7 @@ function AnecdoteList() {
 
   return (
     <div>
-      {anecdotes.map((anecdote) => (
+      {anecdotes.sort((a, b) => b.votes - a.votes).map((anecdote) => (
         <Anecdote
           key={anecdote.id}
           id={anecdote.id}

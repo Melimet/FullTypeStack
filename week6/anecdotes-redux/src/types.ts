@@ -1,6 +1,6 @@
 interface AnecdoteType {
   content: string
-  id: string 
+  id: string
   votes: number
 }
 

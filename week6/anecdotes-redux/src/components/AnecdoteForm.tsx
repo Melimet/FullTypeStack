@@ -4,6 +4,7 @@ import { newAnecdote } from "../reducers/anecdoteReducer"
 
 function AnecdoteForm() {
   const dispatch = useDispatch()
+  
   function addAnecdote(event: React.FormEvent) {
     event.preventDefault()
 
@@ -11,6 +12,7 @@ function AnecdoteForm() {
       text: { value: string }
     }
     const content = target.text.value
+    target.text.value = ""
     dispatch(newAnecdote(content))
   }
 

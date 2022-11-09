@@ -4,4 +4,8 @@ interface AnecdoteType {
   votes: number
 }
 
-export type { AnecdoteType }
+interface StateType {
+  anecdotes: AnecdoteType[]
+}
+
+export type { AnecdoteType, StateType }

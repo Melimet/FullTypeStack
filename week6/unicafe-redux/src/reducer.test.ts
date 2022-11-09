@@ -66,11 +66,13 @@ describe("unicafe reducer", () => {
     const action = {
       type: "ZERO",
     }
+
     const state = {
       good: 99,
       ok: 9999,
       bad: 999,
     }
+
     deepFreeze(state)
     const newState = counterReducer(state, action)
     expect(newState).toEqual({

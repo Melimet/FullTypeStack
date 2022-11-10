@@ -8,4 +8,14 @@ async function getAll(): Promise<AnecdoteType[]> {
   return response.data
 }
 
-export default { getAll }
+async function newAnecdote(anecdote: string): Promise<AnecdoteType> {
+  const obj = {
+    votes: 0,
+    content: anecdote
+  }
+  const response = await axios.post(baseUrl, obj)
+  console.log(response.data)
+  return response.data
+}
+
+export default { getAll, newAnecdote }

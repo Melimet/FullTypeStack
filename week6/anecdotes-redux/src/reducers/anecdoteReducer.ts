@@ -1,15 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { AnecdoteType } from "../types"
 
-const getId = () => (100000 * Math.random()).toFixed(0)
 
-const asObject = (anecdote: string) => {
-  return {
-    content: anecdote,
-    id: getId(),
-    votes: 0,
-  }
-}
 
 const initialState = [] as AnecdoteType[]
 
@@ -19,7 +11,8 @@ const anecdoteSlice = createSlice({
   reducers: {
     newAnecdote(state, action) {
       const content = action.payload
-      state.push(asObject(content))
+      console.log(content)
+      return state.concat(content)
     },
     addLike(state, action) {
       const id = action.payload

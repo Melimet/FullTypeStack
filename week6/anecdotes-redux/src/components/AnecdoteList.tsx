@@ -6,7 +6,6 @@ function AnecdoteList() {
   const filter = useSelector((state: StateType) => state.filter.toLowerCase())
   const anecdotes = useSelector((state: StateType) =>
     state.anecdotes.filter((anecdote) => anecdote.content.toLowerCase().includes(filter)))
-
   return (
     <div>
       {[...anecdotes]

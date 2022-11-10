@@ -7,6 +7,7 @@ interface AnecdoteType {
 interface StateType {
   anecdotes: AnecdoteType[]
   notifications: string
+  filter: string
 }
 
 export type { AnecdoteType, StateType }

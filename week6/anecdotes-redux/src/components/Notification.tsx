@@ -9,7 +9,6 @@ const Notification = () => {
   }
 
   const notification = useSelector((state: StateType) => state.notifications)
-  console.log(notification)
   if (!notification) return <></>
 
   return (

@@ -1,6 +1,6 @@
 import { addLike } from "../reducers/anecdoteReducer"
 import { useDispatch } from "react-redux"
-import { deleteNotification, setNotification } from "../reducers/notificationReducer"
+import { createNotification } from "../reducers/notificationReducer"
 
 interface AnecdoteProps {
   content: string
@@ -14,12 +14,7 @@ function Anecdote({ content, votes, id }: AnecdoteProps) {
   function handleLike(id: string) {
     return () => (
       dispatch(addLike(id)),
-      dispatch(setNotification(`Added like to "${content}"`)),
-      setTimeout(
-        () => {
-          dispatch(deleteNotification(""))
-        }, 3500
-      )
+      dispatch(createNotification(`Added like to, ${content}`, 3.5))  
     )
   }
 

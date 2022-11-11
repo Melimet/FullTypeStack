@@ -18,4 +18,12 @@ async function newAnecdote(anecdote: string): Promise<AnecdoteType> {
   return response.data
 }
 
-export default { getAll, newAnecdote }
+async function updateAnecdote(anecdote: AnecdoteType): Promise<AnecdoteType>{
+  const response = await axios.put(`${baseUrl}/${anecdote.id}`, anecdote)
+  return response.data
+}
+
+
+
+
+export default { getAll, newAnecdote, updateAnecdote }

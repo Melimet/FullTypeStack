@@ -5,6 +5,7 @@ interface AppProps {
 }
 
 function App({ store }: AppProps) {
+  
   function handleClick(type: string) {
     return () => {
       store.dispatch({

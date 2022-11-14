@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom"
-import Anecdote from "./Anecdote"
+import { AnecdoteType } from "../types"
 
-const AnecdoteList = ({ anecdotes }) => (
+interface AnecdoteListProps{
+  anecdotes: AnecdoteType[]
+}
+
+const AnecdoteList = ({ anecdotes }: AnecdoteListProps) => (
   <div>
     <h2>Anecdotes</h2>
     {anecdotes.map((anecdote) => (

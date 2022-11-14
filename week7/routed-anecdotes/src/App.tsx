@@ -8,7 +8,7 @@ import Menu from "./components/Menu"
 import "./App.css"
 import { AnecdoteType } from "./types"
 import Anecdote from "./components/Anecdote"
-
+import Note from "./components/Note"
 
 const App = () => {
   const [anecdotes, setAnecdotes] = useState<AnecdoteType[]>([
@@ -28,12 +28,17 @@ const App = () => {
     },
   ])
 
-  const match = useMatch('/anecdotes/:id')
-  const anecdote = match 
+  const match = useMatch("/anecdotes/:id")
+  const anecdote = match
     ? anecdotes.find((anec) => anec.id === Number(match.params.id))
-    : null 
+    : null
 
   const [notification, setNotification] = useState("")
+
+  function updateNotification(message: string) {
+    setNotification(message)
+    setTimeout(() => setNotification(""), 5000)
+  }
 
   const addNew = (anecdote: AnecdoteType) => {
     anecdote.id = Math.round(Math.random() * 10000)
@@ -59,11 +64,15 @@ const App = () => {
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
+      <Note notification={notification} />
       <Routes>
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
         <Route path="/about" element={<About />} />
-        <Route path="/newAnecdote" element={<CreateNew addNew={addNew} />} />
-        <Route path="/anecdotes/:id" element={<Anecdote anecdote={anecdote} />} />
+        <Route path="/newAnecdote" element={<CreateNew addNew={addNew} updateNotification={updateNotification} />} />
+        <Route
+          path="/anecdotes/:id"
+          element={<Anecdote anecdote={anecdote} />}
+        />
       </Routes>
       <Footer />
     </div>

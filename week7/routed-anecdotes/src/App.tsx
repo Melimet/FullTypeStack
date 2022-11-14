@@ -1,32 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react"
+import { Route, Routes } from "react-router-dom"
+import About from "./components/About"
+import AnecdoteList from "./components/AnecdoteList"
+import CreateNew from "./components/CreateNew"
+import Footer from "./components/Footer"
+import Menu from "./components/Menu"
+import "./App.css"
 
-function App() {
-  const [count, setCount] = useState(0)
+
+const App = () => {
+  const [anecdotes, setAnecdotes] = useState([
+    {
+      content: "If it hurts, do it more often",
+      author: "Jez Humble",
+      info: "https://martinfowler.com/bliki/FrequencyReducesDifficulty.html",
+      votes: 0,
+      id: 1,
+    },
+    {
+      content: "Premature optimization is the root of all evil",
+      author: "Donald Knuth",
+      info: "http://wiki.c2.com/?PrematureOptimization",
+      votes: 0,
+      id: 2,
+    },
+  ])
+
+  const [notification, setNotification] = useState("")
+
+  const addNew = (anecdote) => {
+    anecdote.id = Math.round(Math.random() * 10000)
+    setAnecdotes(anecdotes.concat(anecdote))
+  }
+
+  const anecdoteById = (id) => anecdotes.find((a) => a.id === id)
+
+  const vote = (id) => {
+    const anecdote = anecdoteById(id)
+
+    const voted = {
+      ...anecdote,
+      votes: anecdote.votes + 1,
+    }
+
+    setAnecdotes(anecdotes.map((a) => (a.id === id ? voted : a)))
+  }
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div>
+      <h1>Software anecdotes</h1>
+      <Menu />
+      <Routes>
+        <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/newAnecdote" element={<CreateNew addNew={addNew} />} />
+      </Routes>
+      <Footer />
     </div>
   )
 }

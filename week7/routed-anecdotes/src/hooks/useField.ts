@@ -1,9 +1,10 @@
-import React, { ReactHTML, useState } from 'react'
+import React, { useState } from 'react'
 
 interface returnType{
   type: string,
   value: string,
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void 
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+
 }
 
 export const useField = (type: string): returnType => {
@@ -14,9 +15,13 @@ export const useField = (type: string): returnType => {
     setValue(event.target.value)
   }
 
+  const reset = () => {
+    setValue("")
+  }
+
   return {
     type,
     value,
-    onChange
+    onChange,
   }
 }

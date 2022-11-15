@@ -8,6 +8,7 @@ const CreateNew = (props) => {
   const contentField = useField('content')
   const authorField = useField('author')
   const infoField = useField('info')
+
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
@@ -20,6 +21,16 @@ const CreateNew = (props) => {
     })
     navigate('/')
     props.updateNotification("Note created succesfully!")
+  }
+
+  function handleReset() {
+    const fields = [ contentField, authorField, infoField ]
+    const event = {
+      target: {
+        value: ""
+      }
+    }
+    fields.forEach((field) => field.onChange(event))
   }
 
   return (
@@ -44,7 +55,8 @@ const CreateNew = (props) => {
             {...infoField}
           />
         </div>
-        <button>create</button>
+        <button type="submit">create</button>
+        <button onClick={handleReset} type="reset">reset</button>
       </form>
     </div>
   )

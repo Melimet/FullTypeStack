@@ -1,10 +1,10 @@
-import express from "express"
-import { Blog } from "../models/blog"
-import { User } from "../models/user"
+import express from 'express'
+import { Blog } from '../models/blog'
+import { User } from '../models/user'
 
 const testRouter = express.Router()
 
-testRouter.post("/reset", async (_request, response) => {
+testRouter.post('/reset', async (_request, response) => {
   await Blog.deleteMany({})
   await User.deleteMany({})
 
@@ -12,4 +12,3 @@ testRouter.post("/reset", async (_request, response) => {
 })
 
 module.exports = testRouter
-

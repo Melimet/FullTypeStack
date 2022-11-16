@@ -1,15 +1,15 @@
-import { Notification as NotificationType } from "../types"
-import "../index.css"
+import { Notification as NotificationType } from '../types'
+import '../index.css'
 
 interface NotificationProps {
   notification: NotificationType
 }
 
 function Notification({ notification }: NotificationProps) {
-  if (notification.message === null || notification.message === "") return <></>
+  if (notification.message === null || notification.message === '') return <></>
 
   return (
-    <div className={notification.success ? "success" : "error"}>
+    <div className={notification.success ? 'success' : 'error'}>
       {notification.message}
     </div>
   )

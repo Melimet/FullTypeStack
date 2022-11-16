@@ -21,8 +21,8 @@ const useCountry = (name: string) => {
 
   useEffect(() => {
     if (!name) return
-    GetCountryFromApi()
-    async function GetCountryFromApi() {
+    getCountryFromApi()
+    async function getCountryFromApi() {
       try {
         const res = await axios.get(
           `https://restcountries.com/v3.1/name/${name}?fullText=true`

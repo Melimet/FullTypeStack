@@ -11,7 +11,7 @@ body {
   padding: 1rem;
   display: flex;
   flex-flow: row wrap;
-  justify-content:first baseline;
+  justify-content: first baseline;
   align-items: center;
 }
 
@@ -22,7 +22,7 @@ body {
   margin: 0.5rem;
   background-color: hotpink;
 }
-.error{
+.error {
   color: red;
   background-color: lightcoral;
   border-style: solid;
@@ -30,7 +30,7 @@ body {
   padding: 1rem;
   width: fit-content;
 }
-.success{
+.success {
   color: green;
   background-color: lightcoral;
   border-style: solid;

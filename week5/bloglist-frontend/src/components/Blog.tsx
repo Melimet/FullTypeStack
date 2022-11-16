@@ -1,7 +1,7 @@
-import { BlogType, UserType } from "../types"
-import "../index.css"
-import { useState } from "react"
-import blogService from "../services/blogs"
+import { BlogType, UserType } from '../types'
+import '../index.css'
+import { useState } from 'react'
+import blogService from '../services/blogs'
 
 interface BlogProps {
   blog: BlogType
@@ -32,18 +32,24 @@ function Blog({ blog, updateBlog, removeBlog, blogIsByLoggedUser }: BlogProps) {
   return (
     <div className="blog">
       <h3>{blog.title}</h3>
-      {!visible && <button id="show" onClick={toggleVisibility}>show</button>}
+      {!visible && (
+        <button id="show" onClick={toggleVisibility}>
+          show
+        </button>
+      )}
       {visible && (
         <>
           <p>By: {blog.author}</p>
           <p>url: {blog.url}</p>
           <p>
-            likes: {blog.likes}{" "}
+            likes: {blog.likes}{' '}
             <button id="likeButton" onClick={newLike}>
               like
             </button>
           </p>
-          <button id="hide" onClick={toggleVisibility}>hide</button>
+          <button id="hide" onClick={toggleVisibility}>
+            hide
+          </button>
           {blog.user && blogIsByLoggedUser(blog.user as UserType) && (
             <button id="deleteButton" onClick={handleDelete}>
               delete

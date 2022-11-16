@@ -1,4 +1,4 @@
-export interface BlogType{
+export interface BlogType {
   title: string
   author: string
   url: string
@@ -7,13 +7,13 @@ export interface BlogType{
   user?: string
 }
 
-export interface UserType{
+export interface UserType {
   username: string
   name: string
   id?: string
 }
 
-export interface NewUserType{
+export interface NewUserType {
   username: string
   name: string
   password: string

@@ -1,4 +1,4 @@
-import { BlogType } from "../types"
+import { BlogType } from '../types'
 
 const dummy = (blogs: BlogType[]) => {
   console.log(blogs)
@@ -13,10 +13,10 @@ function favoriteBlog(blogs: BlogType[]) {
   if (blogs.length === 0) return undefined
 
   const emptyBlog: BlogType = {
-    id: "",
-    title: "",
-    author: "",
-    url: "",
+    id: '',
+    title: '',
+    author: '',
+    url: '',
     likes: -Infinity,
   }
 
@@ -48,17 +48,21 @@ function mostBlogs(blogs: BlogType[]) {
 
 function mostLikes(blogs: BlogType[]) {
   if (blogs.length === 0) return undefined
-  
+
   const [mostLikedBlogger] = Array.from(
-    blogs.reduce((bloggers, current) => 
-      bloggers.set(
-        current.author,
-        bloggers.has(current.author) ? bloggers.get(current.author)! + current.likes : current.likes
-      ),
+    blogs.reduce(
+      (bloggers, current) =>
+        bloggers.set(
+          current.author,
+          bloggers.has(current.author)
+            ? bloggers.get(current.author)! + current.likes
+            : current.likes
+        ),
       new Map<string, number>()
-    )).sort((blog1, blog2) => blog2[1] - blog1[1])
-  
-        return {author: mostLikedBlogger[0], likes: mostLikedBlogger[1]}
+    )
+  ).sort((blog1, blog2) => blog2[1] - blog1[1])
+
+  return { author: mostLikedBlogger[0], likes: mostLikedBlogger[1] }
 }
 
-export { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes}
+export { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes }

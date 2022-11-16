@@ -1,4 +1,4 @@
-import { useState} from "react"
+import { useState } from 'react'
 
 interface TogglableProps {
   buttonLabel: string
@@ -8,8 +8,8 @@ interface TogglableProps {
 function Togglable({ buttonLabel, children }: TogglableProps) {
   const [visible, setVisible] = useState(false)
 
-  const hideWhenVisible = { display: visible ? "none" : "" }
-  const showWhenVisible = { display: visible ? "" : "none" }
+  const hideWhenVisible = { display: visible ? 'none' : '' }
+  const showWhenVisible = { display: visible ? '' : 'none' }
 
   function toggleVisibility() {
     setVisible(!visible)

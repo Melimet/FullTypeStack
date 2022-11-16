@@ -1,16 +1,19 @@
 import axios from 'axios'
 
-const baseUrl = "http://localhost:3003/api/login"
+const baseUrl = 'http://localhost:3003/api/login'
 
-interface Credentials{
+interface Credentials {
   username: string
   password: string
 }
 
 async function login(credentials: Credentials) {
-  console.log("🚀 ~ file: login.ts ~ line 11 ~ login ~ credentials", credentials)
+  console.log(
+    '🚀 ~ file: login.ts ~ line 11 ~ login ~ credentials',
+    credentials
+  )
   const response = await axios.post(baseUrl, credentials)
-  console.log("RESPONSE",response)
+  console.log('RESPONSE', response)
   return response.data
 }
 

@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
-import Blog from "../components/Blog"
-import { BlogType, UserType } from "../types"
-import blogService from "../services/blogs"
-import BlogForm from "./BlogForm"
-import Togglable from "./Togglable"
-import { Notification } from "../types"
+import { useEffect, useState } from 'react'
+import Blog from '../components/Blog'
+import { BlogType, UserType } from '../types'
+import blogService from '../services/blogs'
+import BlogForm from './BlogForm'
+import Togglable from './Togglable'
+import { Notification } from '../types'
 
 interface BlogsProps {
   setNotification: React.Dispatch<React.SetStateAction<Notification>>

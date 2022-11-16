@@ -1,23 +1,22 @@
-import { useEffect, useState } from "react"
-import LoggedIn from "./components/LoggedIn"
-import LoginForm from "./components/LoginForm"
-import newBlog from "./services/newBlog"
-import { Notification as NotificationType, UserType } from "./types"
-import "./index.css"
-import Notification from "./components/Notification"
-import Togglable from "./components/Togglable"
-import Blogs from "./components/Blogs"
+import { useEffect, useState } from 'react'
+import LoggedIn from './components/LoggedIn'
+import LoginForm from './components/LoginForm'
+import newBlog from './services/newBlog'
+import { Notification as NotificationType, UserType } from './types'
+import './index.css'
+import Notification from './components/Notification'
+import Togglable from './components/Togglable'
+import Blogs from './components/Blogs'
 
 function App() {
-  
   const [user, setUser] = useState<UserType | undefined>()
   const [notification, setNotification] = useState<NotificationType>({
-    message: "",
+    message: '',
     success: false,
   })
 
   useEffect(() => {
-    const loggedUser = window.localStorage.getItem("loggedUser")
+    const loggedUser = window.localStorage.getItem('loggedUser')
     if (loggedUser) {
       const parsedUser = JSON.parse(loggedUser)
       setUser(parsedUser)
@@ -26,7 +25,7 @@ function App() {
   }, [])
 
   function blogIsByLoggedUser(blogUser: UserType) {
-    return (blogUser.id === user?.id)
+    return blogUser.id === user?.id
   }
 
   if (!user) {
@@ -49,7 +48,10 @@ function App() {
         user={user}
         setUser={setUser}
       />
-      <Blogs blogIsByLoggedUser={blogIsByLoggedUser} setNotification={setNotification}/>
+      <Blogs
+        blogIsByLoggedUser={blogIsByLoggedUser}
+        setNotification={setNotification}
+      />
     </div>
   )
 }

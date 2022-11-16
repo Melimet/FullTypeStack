@@ -1,19 +1,19 @@
-import axios from "axios"
-import { BlogType } from "../types"
-const baseUrl = "http://localhost:3003/api/blogs"
+import axios from 'axios'
+import { BlogType } from '../types'
+const baseUrl = 'http://localhost:3003/api/blogs'
 
-let token = ""
+let token = ''
 
 function setToken(newToken: string) {
   token = `bearer ${newToken}`
 }
 
-function getToken(): string{
+function getToken(): string {
   return token
 }
 
 async function createBlog(
-  newBlog: Omit<BlogType, "likes" | "id">
+  newBlog: Omit<BlogType, 'likes' | 'id'>
 ): Promise<BlogType> {
   const config = {
     headers: { Authorization: token },

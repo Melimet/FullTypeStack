@@ -1,6 +1,6 @@
-import React, { useState } from "react"
-import newBlog from "../services/newBlog"
-import { BlogType, Notification } from "../types"
+import React, { useState } from 'react'
+import newBlog from '../services/newBlog'
+import { BlogType, Notification } from '../types'
 
 type BlogFormProps = {
   blogs: BlogType[]
@@ -9,9 +9,9 @@ type BlogFormProps = {
 }
 
 function BlogForm({ blogs, setBlogs, setNotification }: BlogFormProps) {
-  const [author, setAuthor] = useState("")
-  const [title, setTitle] = useState("")
-  const [url, setUrl] = useState("")
+  const [author, setAuthor] = useState('')
+  const [title, setTitle] = useState('')
+  const [url, setUrl] = useState('')
 
   async function handleSubmit(event: React.FormEvent): Promise<void> {
     try {
@@ -24,10 +24,9 @@ function BlogForm({ blogs, setBlogs, setNotification }: BlogFormProps) {
       })
       setBlogs(blogs.concat(result))
     } catch (error: unknown) {
-      
       setNotification({
-        message: `Error: ${error instanceof Error ? error.message : ""}`, 
-        success: false
+        message: `Error: ${error instanceof Error ? error.message : ''}`,
+        success: false,
       })
     }
   }
@@ -36,7 +35,7 @@ function BlogForm({ blogs, setBlogs, setNotification }: BlogFormProps) {
     <form>
       <h3>Create a new blog</h3>
       <label htmlFor="title">
-        Title{" "}
+        Title{' '}
         <input
           id="title"
           type="text"
@@ -45,7 +44,7 @@ function BlogForm({ blogs, setBlogs, setNotification }: BlogFormProps) {
         />
       </label>
       <label htmlFor="author">
-        Author{" "}
+        Author{' '}
         <input
           id="author"
           type="text"
@@ -54,7 +53,7 @@ function BlogForm({ blogs, setBlogs, setNotification }: BlogFormProps) {
         />
       </label>
       <label htmlFor="url">
-        Url{" "}
+        Url{' '}
         <input
           id="url"
           type="text"

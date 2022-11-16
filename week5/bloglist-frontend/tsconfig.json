@@ -17,5 +17,5 @@
     "types": ["cypress"],
     "jsx": "react-jsx"
   },
-  "include": ["src"],
+  "include": ["src"]
 }

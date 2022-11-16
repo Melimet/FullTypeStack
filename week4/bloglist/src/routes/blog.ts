@@ -1,26 +1,27 @@
-import express, { Request } from "express"
-import { Blog } from "../models/blog"
-import { User } from "../models/user"
-import { BlogType } from "../types"
-import { validateBlog } from "../utils/blog_validator"
-import { CustomRequest, userExtractor } from "../utils/tokenProcessing"
+import express, { Request } from 'express'
+import { Blog } from '../models/blog'
+import { User } from '../models/user'
+import { BlogType } from '../types'
+import { validateBlog } from '../utils/blog_validator'
+import { CustomRequest, userExtractor } from '../utils/tokenProcessing'
 
 const blogRouter = express.Router()
 
-blogRouter.get("/", async (_request, response) => {
-  const blogs = await Blog.find({}).populate("user")
+blogRouter.get('/', async (_request, response) => {
+  const blogs = await Blog.find({}).populate('user')
   return response.json(blogs)
 })
 
-blogRouter.post("/", userExtractor, async (request, response) => {
+blogRouter.post('/', userExtractor, async (request, response) => {
   const blogValidate = validateBlog(request.body)
   if (!blogValidate) return response.status(400).end()
 
-  if (!(request as CustomRequest).token) return response.status(401).json({ error: "Auth token missing."})
+  if (!(request as CustomRequest).token)
+    return response.status(401).json({ error: 'Auth token missing.' })
 
   const user = await User.findById((request as CustomRequest).user)
 
-  if (!user) return response.status(400).json({ error: "User not found." })
+  if (!user) return response.status(400).json({ error: 'User not found.' })
 
   const blog = new Blog({
     ...blogValidate,
@@ -35,10 +36,10 @@ blogRouter.post("/", userExtractor, async (request, response) => {
   return response.status(201).json(savedBlog)
 })
 
-blogRouter.delete("/:id", userExtractor, async (request: Request, response) => {
+blogRouter.delete('/:id', userExtractor, async (request: Request, response) => {
   const idToBeDeleted: string | undefined = request.params.id
   if (!idToBeDeleted) return response.status(400).end()
-  console.log("headers", request.headers.authorization)
+  console.log('headers', request.headers.authorization)
 
   const blog = await Blog.findById(idToBeDeleted)
   const user = await User.findById((request as CustomRequest).user)
@@ -46,7 +47,7 @@ blogRouter.delete("/:id", userExtractor, async (request: Request, response) => {
   if (!blog || !user) return response.status(404).end()
 
   if (blog.user.toString() !== user.id.toString()) {
-    return response.status(401).json({ error: "Unauthorized" })
+    return response.status(401).json({ error: 'Unauthorized' })
   }
   const result: BlogType | undefined | null = await Blog.findByIdAndDelete(
     idToBeDeleted
@@ -56,7 +57,7 @@ blogRouter.delete("/:id", userExtractor, async (request: Request, response) => {
   return response.status(200).json(result)
 })
 
-blogRouter.put("/:id", async (request, response) => {
+blogRouter.put('/:id', async (request, response) => {
   const blogToBeUpdated: BlogType | undefined = request.body
   const idToBeUpdated: string | undefined = request.params.id
   if (!idToBeUpdated || !blogToBeUpdated) return response.status(400).end()

@@ -31,5 +31,5 @@ export function createNotification(notification: NotificationType, time: number)
   }
 }
 
-//export const { setNotification } = notificationSlice.actions
+export const { setNotification } = notificationSlice.actions
 export default notificationSlice.reducer

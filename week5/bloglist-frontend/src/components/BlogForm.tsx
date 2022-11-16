@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import newBlog from '../services/newBlog'
-import { BlogType, NotificationType } from '../types'
-import { useDispatch } from "react-redux"
+import { BlogType } from '../types'
 import { createNotification } from '../reducers/notificationReducer'
+import { useAppDispatch } from "../hooks/dispatchHooks"
 
 type BlogFormProps = {
   blogs: BlogType[]
@@ -14,7 +14,7 @@ function BlogForm({ blogs, setBlogs }: BlogFormProps) {
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   async function handleSubmit(event: React.FormEvent): Promise<void> {
     try {

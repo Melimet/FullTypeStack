@@ -39,15 +39,13 @@ function App() {
   return (
     <div>
       <h2>blogs</h2>
-      <Notification notification={notification} />
+      <Notification />
       <LoggedIn
-        setNotification={setNotification}
         user={user}
         setUser={setUser}
       />
       <Blogs
         blogIsByLoggedUser={blogIsByLoggedUser}
-        setNotification={setNotification}
       />
     </div>
   )

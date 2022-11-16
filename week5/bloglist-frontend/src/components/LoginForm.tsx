@@ -2,8 +2,8 @@ import React from 'react'
 import { useState } from 'react'
 import login from '../services/login'
 import { UserType } from '../types'
-import { useDispatch } from 'react-redux'
 import { createNotification } from '../reducers/notificationReducer'
+import { useAppDispatch } from "../hooks/dispatchHooks"
 
 type LoginFormProps = {
   setUser: React.Dispatch<React.SetStateAction<UserType | undefined>>
@@ -13,7 +13,7 @@ function LoginForm({ setUser }: LoginFormProps) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   async function handleLogin(event: React.FormEvent) {
     event.preventDefault()

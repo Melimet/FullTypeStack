@@ -4,14 +4,12 @@ import { BlogType, UserType } from '../types'
 import blogService from '../services/blogs'
 import BlogForm from './BlogForm'
 import Togglable from './Togglable'
-import { Notification } from '../types'
 
 interface BlogsProps {
-  setNotification: React.Dispatch<React.SetStateAction<Notification>>
   blogIsByLoggedUser: (blogUser: UserType) => boolean
 }
 
-function Blogs({ setNotification, blogIsByLoggedUser }: BlogsProps) {
+function Blogs({ blogIsByLoggedUser }: BlogsProps) {
   const [blogs, setBlogs] = useState<BlogType[]>([])
 
   useEffect(() => {
@@ -36,7 +34,6 @@ function Blogs({ setNotification, blogIsByLoggedUser }: BlogsProps) {
     <div>
       <Togglable buttonLabel="New Blog">
         <BlogForm
-          setNotification={setNotification}
           blogs={blogs}
           setBlogs={setBlogs}
         />

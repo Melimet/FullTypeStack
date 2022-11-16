@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import LoggedIn from './components/LoggedIn'
 import LoginForm from './components/LoginForm'
 import newBlog from './services/newBlog'
-import { Notification as NotificationType, UserType } from './types'
+import { UserType } from './types'
 import './index.css'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
@@ -10,10 +10,7 @@ import Blogs from './components/Blogs'
 
 function App() {
   const [user, setUser] = useState<UserType | undefined>()
-  const [notification, setNotification] = useState<NotificationType>({
-    message: '',
-    success: false,
-  })
+
 
   useEffect(() => {
     const loggedUser = window.localStorage.getItem('loggedUser')
@@ -31,9 +28,9 @@ function App() {
   if (!user) {
     return (
       <div>
-        <Notification notification={notification} />
+        <Notification />
         <Togglable buttonLabel="Login">
-          <LoginForm setNotification={setNotification} setUser={setUser} />
+          <LoginForm setUser={setUser} />
         </Togglable>
       </div>
     )

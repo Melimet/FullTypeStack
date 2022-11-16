@@ -1,12 +1,13 @@
-import { Notification as NotificationType } from '../types'
 import '../index.css'
+import { useSelector } from 'react-redux'
+import { StateType } from '../types'
 
-interface NotificationProps {
-  notification: NotificationType
-}
 
-function Notification({ notification }: NotificationProps) {
-  if (notification.message === null || notification.message === '') return <></>
+function Notification() {
+
+  const notification = useSelector((state: StateType) => state.notifications)
+
+  if (!notification?.message || notification.message === null || notification.message === '') return <></>
 
   return (
     <div className={notification.success ? 'success' : 'error'}>

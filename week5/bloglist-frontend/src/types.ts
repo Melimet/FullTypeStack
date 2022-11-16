@@ -14,7 +14,11 @@ export interface UserType {
   token: string
 }
 
-export interface Notification {
+export interface NotificationType {
   message: string
   success: boolean
+}
+
+export interface StateType {
+  notifications: NotificationType
 }

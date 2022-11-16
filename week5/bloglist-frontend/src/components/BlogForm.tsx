@@ -1,33 +1,37 @@
 import React, { useState } from 'react'
 import newBlog from '../services/newBlog'
-import { BlogType, Notification } from '../types'
+import { BlogType, NotificationType } from '../types'
+import { useDispatch } from "react-redux"
+import { createNotification } from '../reducers/notificationReducer'
 
 type BlogFormProps = {
   blogs: BlogType[]
   setBlogs: React.Dispatch<React.SetStateAction<BlogType[]>>
-  setNotification: React.Dispatch<React.SetStateAction<Notification>>
 }
 
-function BlogForm({ blogs, setBlogs, setNotification }: BlogFormProps) {
+function BlogForm({ blogs, setBlogs }: BlogFormProps) {
   const [author, setAuthor] = useState('')
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
+
+  const dispatch = useDispatch()
 
   async function handleSubmit(event: React.FormEvent): Promise<void> {
     try {
       event.preventDefault()
       const result = await newBlog.createBlog({ author, title, url })
 
-      setNotification({
+      dispatch(createNotification({
         message: `Creation of ${result.title} successful`,
         success: true,
-      })
+      }, 3.5))
+
       setBlogs(blogs.concat(result))
     } catch (error: unknown) {
-      setNotification({
+      dispatch(createNotification({
         message: `Error: ${error instanceof Error ? error.message : ''}`,
         success: false,
-      })
+      }, 3.5))
     }
   }
 

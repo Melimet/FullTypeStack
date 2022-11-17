@@ -1,11 +1,9 @@
 import '../index.css'
-import { useSelector } from 'react-redux'
-import { StateType } from '../types'
-
+import { useAppSelector } from "../hooks/dispatchHooks"
 
 function Notification() {
 
-  const notification = useSelector((state: StateType) => state.notifications)
+  const notification = useAppSelector((state) => state.notifications)
 
   if (!notification?.message || notification.message === null || notification.message === '') return <></>
 

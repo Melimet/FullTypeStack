@@ -16,9 +16,11 @@ blogRouter.post('/', userExtractor, async (request, response) => {
   const blogValidate = validateBlog(request.body)
   if (!blogValidate) return response.status(400).end()
 
-  if (!(request as CustomRequest).token)
+  if (!(request as CustomRequest).token) {
+    console.log("tämä")
     return response.status(401).json({ error: 'Auth token missing.' })
-
+  }
+  
   const user = await User.findById((request as CustomRequest).user)
 
   if (!user) return response.status(400).json({ error: 'User not found.' })

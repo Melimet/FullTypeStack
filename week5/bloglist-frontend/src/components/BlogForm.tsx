@@ -1,15 +1,9 @@
 import React, { useState } from 'react'
-import newBlog from '../services/newBlog'
-import { BlogType } from '../types'
 import { createNotification } from '../reducers/notificationReducer'
-import { useAppDispatch } from "../hooks/dispatchHooks"
+import { useAppDispatch } from '../hooks/dispatchHooks'
+import { createBlog } from '../reducers/blogReducer'
 
-type BlogFormProps = {
-  blogs: BlogType[]
-  setBlogs: React.Dispatch<React.SetStateAction<BlogType[]>>
-}
-
-function BlogForm({ blogs, setBlogs }: BlogFormProps) {
+function BlogForm() {
   const [author, setAuthor] = useState('')
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
@@ -19,19 +13,28 @@ function BlogForm({ blogs, setBlogs }: BlogFormProps) {
   async function handleSubmit(event: React.FormEvent): Promise<void> {
     try {
       event.preventDefault()
-      const result = await newBlog.createBlog({ author, title, url })
 
-      dispatch(createNotification({
-        message: `Creation of ${result.title} successful`,
-        success: true,
-      }, 3.5))
+      await dispatch(createBlog({ author, title, url }))
 
-      setBlogs(blogs.concat(result))
+      dispatch(
+        createNotification(
+          {
+            message: `Creation of ${title} successful`,
+            success: true,
+          },
+          3.5
+        )
+      )
     } catch (error: unknown) {
-      dispatch(createNotification({
-        message: `Error: ${error instanceof Error ? error.message : ''}`,
-        success: false,
-      }, 3.5))
+      dispatch(
+        createNotification(
+          {
+            message: `Error: ${error instanceof Error ? error.message : ''}`,
+            success: false,
+          },
+          3.5
+        )
+      )
     }
   }
 

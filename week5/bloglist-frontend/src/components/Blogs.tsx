@@ -4,21 +4,21 @@ import { BlogType, UserType } from '../types'
 import blogService from '../services/blogs'
 import BlogForm from './BlogForm'
 import Togglable from './Togglable'
+import { useAppDispatch, useAppSelector } from '../hooks/dispatchHooks'
+import { initializeBlogs } from '../reducers/blogReducer'
 
 interface BlogsProps {
   blogIsByLoggedUser: (blogUser: UserType) => boolean
 }
 
 function Blogs({ blogIsByLoggedUser }: BlogsProps) {
-  const [blogs, setBlogs] = useState<BlogType[]>([])
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    fetchBlogs()
-    async function fetchBlogs() {
-      const blogs = await blogService.getAll()
-      setBlogs(blogs)
-    }
-  }, [])
+    dispatch(initializeBlogs())
+  }, [dispatch])
+
+  const blogs = useAppSelector(state => state.blogs)
 
   function updateBlog(blog: BlogType) {
     const newBlogs = blogs.filter((b) => b.id !== blog.id)
@@ -33,13 +33,10 @@ function Blogs({ blogIsByLoggedUser }: BlogsProps) {
   return (
     <div>
       <Togglable buttonLabel="New Blog">
-        <BlogForm
-          blogs={blogs}
-          setBlogs={setBlogs}
-        />
+        <BlogForm />
       </Togglable>
       <main className="flex-wrapper">
-        {blogs
+        {[...blogs]
           .sort((a, b) => b.likes - a.likes)
           .map((blog) => (
             <Blog

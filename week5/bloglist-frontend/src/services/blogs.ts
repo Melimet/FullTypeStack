@@ -9,21 +9,21 @@ async function getAll(): Promise<BlogType[]> {
 }
 
 async function addLike(blog: BlogType) {
-  blog.likes++
-
   if (typeof blog.user === 'string') return undefined
-  blog.user = blog.user?.id
 
+  blog.likes++
+  blog.user = blog.user?.id
+  
   const request = await axios.put(`${baseUrl}/${blog.id}`, blog)
   return request.data
 }
 
 async function deleteBlog(blog: BlogType) {
-  console.log(blog.user)
   const config = {
     headers: { Authorization: newBlogService.getToken() },
   }
   const request = await axios.delete(`${baseUrl}/${blog.id}`, config)
+  console.log("PALAUTUS",request.data)
   return request.data
 }
 

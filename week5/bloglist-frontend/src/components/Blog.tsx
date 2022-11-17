@@ -1,32 +1,33 @@
 import { BlogType, UserType } from '../types'
 import '../index.css'
 import { useState } from 'react'
-import blogService from '../services/blogs'
+import { useAppDispatch } from '../hooks/dispatchHooks'
+import { removeBlog, updateLike } from '../reducers/blogReducer'
 
 interface BlogProps {
   blog: BlogType
-  updateBlog: (blog: BlogType) => void
-  removeBlog: (blog: BlogType) => void
   blogIsByLoggedUser: (blogUser: UserType) => boolean
 }
 
-function Blog({ blog, updateBlog, removeBlog, blogIsByLoggedUser }: BlogProps) {
+function Blog({ blog, blogIsByLoggedUser }: BlogProps) {
   const [visible, setVisible] = useState(false)
+
+  const dispatch = useAppDispatch()
 
   function toggleVisibility() {
     setVisible(!visible)
   }
 
   async function newLike() {
-    const result = await blogService.addLike(blog)
-    updateBlog(result)
-    return result
+    const res = await dispatch(updateLike(blog))
+    return res
   }
 
   async function handleDelete() {
-    const result = await blogService.deleteBlog(blog)
-    removeBlog(result)
-    return result
+    
+    const res = await dispatch(removeBlog(blog))
+
+    return res
   }
 
   return (

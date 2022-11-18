@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import LoggedIn from './components/LoggedIn'
 import LoginForm from './components/LoginForm'
-import newBlog from './services/newBlog'
 import { UserType } from './types'
 import './index.css'
 import Notification from './components/Notification'

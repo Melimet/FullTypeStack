@@ -23,7 +23,6 @@ async function deleteBlog(blog: BlogType) {
     headers: { Authorization: newBlogService.getToken() },
   }
   const request = await axios.delete(`${baseUrl}/${blog.id}`, config)
-  console.log("PALAUTUS",request.data)
   return request.data
 }
 

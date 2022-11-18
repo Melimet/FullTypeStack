@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Blog from '../components/Blog'
-import { BlogType, UserType } from '../types'
+import { UserType } from '../types'
 import BlogForm from './BlogForm'
 import Togglable from './Togglable'
 import { useAppDispatch, useAppSelector } from '../hooks/dispatchHooks'

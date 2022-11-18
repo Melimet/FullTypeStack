@@ -2,7 +2,6 @@ import { createSlice, Dispatch } from '@reduxjs/toolkit'
 import { BlogType } from '../types'
 import blogService from '../services/blogs'
 import createBlogService from '../services/newBlog'
-import { useAppSelector } from '../hooks/dispatchHooks'
 
 const initialState = [] as BlogType[]
 
@@ -19,15 +18,15 @@ const blogSlice = createSlice({
     updateBlogs(state, action) {
       const blog = action.payload
 
-      const newBlogs = [...state].map(b => b.id !== blog.id ? b : blog)
+      const newBlogs = [...state].map((b) => (b.id !== blog.id ? b : blog))
       return newBlogs
     },
     deleteBlog(state, action) {
       const blog = action.payload
-    
-      const newBlogs = [...state].filter(b => b.id !== blog.id)
+
+      const newBlogs = [...state].filter((b) => b.id !== blog.id)
       return newBlogs
-    }
+    },
   },
 })
 
@@ -51,7 +50,6 @@ export function createBlog(content: {
 
 export function removeBlog(blog: BlogType) {
   return async (dispatch: Dispatch) => {
-    
     const result = await blogService.deleteBlog(blog)
     dispatch(deleteBlog(result))
 
@@ -62,7 +60,7 @@ export function removeBlog(blog: BlogType) {
 export function updateLike(blog: BlogType) {
   return async (dispatch: Dispatch) => {
     const blogCopy = { ...blog }
-    
+
     const result = await blogService.addLike(blogCopy)
 
     dispatch(updateBlogs(result))
@@ -70,7 +68,6 @@ export function updateLike(blog: BlogType) {
     return result
   }
 }
-
 
 export const { newBlog, setBlogs, updateBlogs, deleteBlog } = blogSlice.actions
 export default blogSlice.reducer

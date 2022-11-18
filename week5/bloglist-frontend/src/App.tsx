@@ -7,19 +7,19 @@ import './index.css'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import Blogs from './components/Blogs'
+import { useAppDispatch, useAppSelector } from './hooks/dispatchHooks'
+import { initializeLoginState } from './reducers/loginReducer'
 
 function App() {
-  const [user, setUser] = useState<UserType | undefined>()
 
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const loggedUser = window.localStorage.getItem('loggedUser')
-    if (loggedUser) {
-      const parsedUser = JSON.parse(loggedUser)
-      setUser(parsedUser)
-      newBlog.setToken(parsedUser?.token)
-    }
+    dispatch(initializeLoginState())
   }, [])
+
+  const user = useAppSelector(state => state.user)
+
 
   function blogIsByLoggedUser(blogUser: UserType) {
     return blogUser.id === user?.id
@@ -38,15 +38,10 @@ function App() {
 
   return (
     <div>
-      <h2>blogs</h2>
+      <h2 className='title'>blogs</h2>
       <Notification />
-      <LoggedIn
-        user={user}
-        setUser={setUser}
-      />
-      <Blogs
-        blogIsByLoggedUser={blogIsByLoggedUser}
-      />
+      <LoggedIn user={user} setUser={setUser} />
+      <Blogs blogIsByLoggedUser={blogIsByLoggedUser} />
     </div>
   )
 }

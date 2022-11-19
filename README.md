@@ -1,2 +1,6 @@
 # FullTypeStack
-Fullstack open made with typescript
+
+University of Helsinki Full Stack web development course made with typescript as a bonus challenge
+
+
+https://fullstackopen.com/

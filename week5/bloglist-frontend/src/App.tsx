@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from './hooks/dispatchHooks'
 import { initializeLoginState } from './reducers/loginReducer'
 import Navigation from './components/Navigation'
 import { Route, Routes, useMatch } from "react-router-dom"
+import Users from './components/Users'
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
       <Notification />
       <Routes>
         <Route path="/" element={<Blogs blogIsByLoggedUser={blogIsByLoggedUser} />} />
+        <Route path="/users" element={<Users />} />
       </Routes>
     </div>
   )

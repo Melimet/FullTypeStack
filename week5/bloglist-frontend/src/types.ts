@@ -18,3 +18,7 @@ export interface NotificationType {
   message: string
   success: boolean
 }
+
+export interface UserResponseType extends UserType{
+  blogs: BlogType[]
+}

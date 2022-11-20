@@ -5,6 +5,7 @@ body {
   background-color: #33332d;
   color: #fff;
   margin: 0;
+  
 }
 
 a {
@@ -24,7 +25,6 @@ a {
 
 .navbar {
   display: flex;
-  background-color: black;
   justify-content: flex-start;
   align-items: center;
   padding: 0;
@@ -43,15 +43,17 @@ a {
   padding: 1rem;
   display: flex;
   flex-flow: row wrap;
-  justify-content: first baseline;
-  align-items: center;
+  align-items: center;  
 }
 
 .blog {
-  width: fit-content;
-  padding: 1rem;
+  flex: 1 1 0px;
+  align-self: stretch;
+  padding: 0.5rem;
   margin: 0.5rem;
   background-color: hotpink;
+  border-radius: 20px;
+  text-align: center;
 }
 
 .error {

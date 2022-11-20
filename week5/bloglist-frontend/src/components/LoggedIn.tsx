@@ -1,25 +1,23 @@
-import newBlog from '../services/newBlog'
-import { UserType } from '../types'
 import { createNotification } from '../reducers/notificationReducer'
-import { useAppDispatch } from "../hooks/dispatchHooks"
+import { useAppDispatch, useAppSelector } from '../hooks/dispatchHooks'
+import { logOutUser } from '../reducers/loginReducer'
 
-type LoggedInProps = {
-  user: UserType
-  setUser: React.Dispatch<React.SetStateAction<UserType | undefined>>
-}
-
-function LoggedIn({ user, setUser }: LoggedInProps) {
-  
+function LoggedIn() {
   const dispatch = useAppDispatch()
+  const user = useAppSelector((state) => state.user)
 
   function handleLogout() {
-    window.localStorage.removeItem('loggedUser')
-    setUser(undefined)
-    dispatch(createNotification({
-      message: 'logged out',
-      success: true,
-    }, 3.5))
-    newBlog.setToken('')
+    dispatch(logOutUser())
+
+    dispatch(
+      createNotification(
+        {
+          message: 'logged out',
+          success: true,
+        },
+        3.5
+      )
+    )
   }
 
   return (

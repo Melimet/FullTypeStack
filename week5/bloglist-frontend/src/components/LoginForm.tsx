@@ -1,15 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
-import login from '../services/login'
-import { UserType } from '../types'
 import { createNotification } from '../reducers/notificationReducer'
 import { useAppDispatch } from "../hooks/dispatchHooks"
+import { loginUser } from '../reducers/loginReducer'
 
-type LoginFormProps = {
-  setUser: React.Dispatch<React.SetStateAction<UserType | undefined>>
-}
 
-function LoginForm({ setUser }: LoginFormProps) {
+
+function LoginForm() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -19,11 +16,9 @@ function LoginForm({ setUser }: LoginFormProps) {
     event.preventDefault()
 
     try {
-      const user = await login({ username, password })
 
-      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      dispatch(loginUser({username, password}))
 
-      setUser(user)
       setUsername('')
       setPassword('')
       dispatch(

@@ -1,6 +1,8 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit'
 import { UserType } from '../types'
 import newBlogService from '../services/newBlog'
+import newBlog from '../services/newBlog'
+import login, { Credentials } from '../services/login'
 
 const initialState = {} as UserType
 
@@ -25,13 +27,25 @@ export function initializeLoginState() {
   }
 }
 
-export function loginUser(user: UserType) {
-  return async (dispatch: Dispatch) => {}
+export function loginUser({username, password}: Credentials) {
+  return async (dispatch: Dispatch) => {
+    const user = await login({ username, password })
+
+    if (!user) return
+
+    window.localStorage.setItem('loggedUser', JSON.stringify(user))
+    newBlogService.setToken(user.token)
+    dispatch(updateUser(user))
+
+  }
 }
 
 export function logOutUser() {
   return async (dispatch: Dispatch) => {
     dispatch(updateUser(initialState))
+
+    window.localStorage.removeItem('loggedUser')
+    newBlog.setToken('')
   }
 }
 

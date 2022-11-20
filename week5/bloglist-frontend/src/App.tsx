@@ -18,18 +18,19 @@ function App() {
   }, [])
 
   const user = useAppSelector(state => state.user)
-
+  console.log(user)
 
   function blogIsByLoggedUser(blogUser: UserType) {
     return blogUser.id === user?.id
   }
 
-  if (!user) {
+  if (!user?.username) {
     return (
       <div>
+        <h2 className='title'>blogs</h2>
         <Notification />
         <Togglable buttonLabel="Login">
-          <LoginForm setUser={setUser} />
+          <LoginForm />
         </Togglable>
       </div>
     )
@@ -39,7 +40,7 @@ function App() {
     <div>
       <h2 className='title'>blogs</h2>
       <Notification />
-      <LoggedIn user={user} setUser={setUser} />
+      <LoggedIn />
       <Blogs blogIsByLoggedUser={blogIsByLoggedUser} />
     </div>
   )

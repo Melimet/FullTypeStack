@@ -15,6 +15,9 @@ function getToken(): string {
 async function createBlog(
   newBlog: Omit<BlogType, 'likes' | 'id'>
 ): Promise<BlogType> {
+
+    
+
   const config = {
     headers: { Authorization: token },
   }

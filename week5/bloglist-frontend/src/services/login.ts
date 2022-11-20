@@ -1,17 +1,15 @@
 import axios from 'axios'
+import { UserType } from '../types'
 
 const baseUrl = 'http://localhost:3003/api/login'
 
-interface Credentials {
+export interface Credentials {
   username: string
   password: string
 }
 
-async function login(credentials: Credentials) {
-  console.log(
-    '🚀 ~ file: login.ts ~ line 11 ~ login ~ credentials',
-    credentials
-  )
+async function login(credentials: Credentials): Promise<UserType> {
+
   const response = await axios.post(baseUrl, credentials)
   console.log('RESPONSE', response)
   return response.data

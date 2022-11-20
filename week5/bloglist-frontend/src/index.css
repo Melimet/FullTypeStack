@@ -9,11 +9,13 @@ body {
 
 .title {
   padding: 0;
-  background: linear-gradient(to right, #fb5607 0%, #8338ec 40%, hotpink 100%);
+  background: linear-gradient(to right, #fb5607 0%, hotpink 40%,  #8338ec 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 3rem;
   margin-bottom: 0;
+  margin-top: 0;
+  display: inline-block
 }
 
 .flex-wrapper {
@@ -26,7 +28,6 @@ body {
 
 .blog {
   width: fit-content;
-  margin: 0 auto;
   padding: 1rem;
   margin: 0.5rem;
   background-color: hotpink;

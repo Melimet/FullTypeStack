@@ -26,7 +26,6 @@ function Blog({ blog, blogIsByLoggedUser }: BlogProps) {
   async function handleDelete() {
     
     const res = await dispatch(removeBlog(blog))
-
     return res
   }
 

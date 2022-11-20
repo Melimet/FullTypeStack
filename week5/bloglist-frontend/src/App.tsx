@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import LoggedIn from './components/LoggedIn'
 import LoginForm from './components/LoginForm'
 import { UserType } from './types'
 import './index.css'
@@ -8,6 +7,8 @@ import Togglable from './components/Togglable'
 import Blogs from './components/Blogs'
 import { useAppDispatch, useAppSelector } from './hooks/dispatchHooks'
 import { initializeLoginState } from './reducers/loginReducer'
+import Navigation from './components/Navigation'
+import { Route, Routes, useMatch } from "react-router-dom"
 
 function App() {
 
@@ -38,10 +39,11 @@ function App() {
 
   return (
     <div>
-      <h2 className='title'>blogs</h2>
+      <Navigation />
       <Notification />
-      <LoggedIn />
-      <Blogs blogIsByLoggedUser={blogIsByLoggedUser} />
+      <Routes>
+        <Route path="/" element={<Blogs blogIsByLoggedUser={blogIsByLoggedUser} />} />
+      </Routes>
     </div>
   )
 }

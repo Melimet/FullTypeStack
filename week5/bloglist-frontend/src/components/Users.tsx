@@ -1,26 +1,15 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { fetchUsers } from '../services/users'
+import { Link } from 'react-router-dom'
 import { UserResponseType } from '../types'
 
-
-
-function Users() {
-  const [users, setUsers] = useState<UserResponseType[]>([])
-
-  useEffect(() => {
-    getUsers()
-    async function getUsers() {
-      const res = await fetchUsers()
-      setUsers(res)
-    }
-  }, [])
-
+function Users({ users }: { users: UserResponseType[] }) {
   return (
     <div>
       <h2>Users</h2>
       {users.map((user) => (
-        <p key={user.username}>{user.username}, blogs: {user.blogs.length}</p>
+        <p key={user.username}>
+          <Link to={`/users/${user.id}`}>{user.username}</Link>, blogs:{' '}
+          {user.blogs.length}
+        </p>
       ))}
     </div>
   )

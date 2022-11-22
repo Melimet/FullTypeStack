@@ -1,6 +1,5 @@
 import { BlogType, UserType } from '../types'
 import '../index.css'
-import { useState } from 'react'
 import { useAppDispatch } from '../hooks/dispatchHooks'
 import { removeBlog, updateLike } from '../reducers/blogReducer'
 
@@ -10,12 +9,7 @@ interface BlogProps {
 }
 
 function Blog({ blog, blogIsByLoggedUser }: BlogProps) {
-
-
-
   const dispatch = useAppDispatch()
-
-
 
   if (!blog) return <p>404 blog not found</p>
 
@@ -32,26 +26,36 @@ function Blog({ blog, blogIsByLoggedUser }: BlogProps) {
   }
 
   return (
-    <div className="blog">
-      <h3>{blog.title}</h3>
-     
-        
-          <p>By: {blog.author}</p>
-          <p>url: {blog.url}</p>
-          <p>
-            likes: {blog.likes}{' '}
-            <button id="likeButton" onClick={newLike}>
-              like
-            </button>
-          </p>
-          {blog.user && blogIsByLoggedUser(blog.user as UserType) && (
-            <button id="deleteButton" onClick={handleDelete}>
-              delete
-            </button>
+    <main className="flex-wrapper">
+      <div className="blog">
+        <h3>{blog.title}</h3>
+
+        <p>By: {blog.author}</p>
+        <p>url: {blog.url}</p>
+        <p>
+          likes: {blog.likes}{' '}
+          <button id="likeButton" onClick={newLike}>
+            like
+          </button>
+        </p>
+        {blog.user && blogIsByLoggedUser(blog.user as UserType) && (
+          <button id="deleteButton" onClick={handleDelete}>
+            delete
+          </button>
+        )}
+
+        <h4>Comments</h4>
+        <ul>
+          {blog?.comments ? (
+            blog.comments.map((comment, index) => (
+              <li key={index}>{comment}</li>
+            ))
+          ) : (
+            <></>
           )}
-        
-      
-    </div>
+        </ul>
+      </div>
+    </main>
   )
 }
 

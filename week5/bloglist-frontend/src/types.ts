@@ -5,6 +5,7 @@ export interface BlogType {
   url: string
   likes: number
   user?: UserType | string
+  comments?: string[]
 }
 
 export interface UserType {

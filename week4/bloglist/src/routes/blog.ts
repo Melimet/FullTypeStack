@@ -17,7 +17,6 @@ blogRouter.post('/', userExtractor, async (request, response) => {
   if (!blogValidate) return response.status(400).end()
 
   if (!(request as CustomRequest).token) {
-    console.log("tämä")
     return response.status(401).json({ error: 'Auth token missing.' })
   }
   

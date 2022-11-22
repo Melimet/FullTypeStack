@@ -5,7 +5,6 @@ body {
   background-color: #33332d;
   color: #fff;
   margin: 0;
-  
 }
 
 a {
@@ -30,20 +29,20 @@ a {
   padding: 0;
 }
 
-.navbar > *{
-  margin-right: 3rem; 
+.navbar > * {
+  margin-right: 3rem;
 }
 
-.navbar > *:hover{
+.navbar > *:hover {
   background-color: gray;
 }
-
 
 .flex-wrapper {
   padding: 1rem;
   display: flex;
   flex-flow: row wrap;
-  align-items: center;  
+  align-items: center;
+  justify-content: center;
 }
 
 .blog {
@@ -54,6 +53,11 @@ a {
   background-color: hotpink;
   border-radius: 20px;
   text-align: center;
+  max-width: 760px;
+}
+
+.blog:hover {
+  background-color: pink;
 }
 
 .error {

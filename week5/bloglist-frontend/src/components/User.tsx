@@ -4,7 +4,6 @@ function User({ userInfo }: { userInfo: UserResponseType | undefined }) {
   
   if (!userInfo) return <p>user not found</p>
 
-
   return (
     <div>
       <h2>{userInfo.name}</h2>

@@ -13,15 +13,12 @@ function getToken(): string {
 }
 
 async function createBlog(
-  newBlog: Omit<BlogType, 'likes' | 'id'>
+  newBlog: Omit<BlogType, 'likes' | 'id' | 'comments'>
 ): Promise<BlogType> {
-
-    
 
   const config = {
     headers: { Authorization: token },
   }
-  console.log(config)
 
   const request = await axios.post(baseUrl, newBlog, config)
 

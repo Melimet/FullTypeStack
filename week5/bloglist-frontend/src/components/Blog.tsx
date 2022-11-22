@@ -5,26 +5,28 @@ import { useAppDispatch } from '../hooks/dispatchHooks'
 import { removeBlog, updateLike } from '../reducers/blogReducer'
 
 interface BlogProps {
-  blog: BlogType
+  blog: BlogType | undefined
   blogIsByLoggedUser: (blogUser: UserType) => boolean
 }
 
 function Blog({ blog, blogIsByLoggedUser }: BlogProps) {
-  const [visible, setVisible] = useState(false)
+
+
 
   const dispatch = useAppDispatch()
 
-  function toggleVisibility() {
-    setVisible(!visible)
-  }
+
+
+  if (!blog) return <p>404 blog not found</p>
 
   async function newLike() {
+    if (!blog) return
     const res = await dispatch(updateLike(blog))
     return res
   }
 
   async function handleDelete() {
-    
+    if (!blog) return
     const res = await dispatch(removeBlog(blog))
     return res
   }
@@ -32,13 +34,8 @@ function Blog({ blog, blogIsByLoggedUser }: BlogProps) {
   return (
     <div className="blog">
       <h3>{blog.title}</h3>
-      {!visible && (
-        <button id="show" onClick={toggleVisibility}>
-          show
-        </button>
-      )}
-      {visible && (
-        <>
+     
+        
           <p>By: {blog.author}</p>
           <p>url: {blog.url}</p>
           <p>
@@ -47,16 +44,13 @@ function Blog({ blog, blogIsByLoggedUser }: BlogProps) {
               like
             </button>
           </p>
-          <button id="hide" onClick={toggleVisibility}>
-            hide
-          </button>
           {blog.user && blogIsByLoggedUser(blog.user as UserType) && (
             <button id="deleteButton" onClick={handleDelete}>
               delete
             </button>
           )}
-        </>
-      )}
+        
+      
     </div>
   )
 }

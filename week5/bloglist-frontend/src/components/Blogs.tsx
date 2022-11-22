@@ -1,24 +1,15 @@
-import { useEffect } from 'react'
-import Blog from '../components/Blog'
-import { UserType } from '../types'
 import BlogForm from './BlogForm'
 import Togglable from './Togglable'
-import { useAppDispatch, useAppSelector } from '../hooks/dispatchHooks'
-import { initializeBlogs } from '../reducers/blogReducer'
+import { useAppSelector } from '../hooks/dispatchHooks'
 
-interface BlogsProps {
-  blogIsByLoggedUser: (blogUser: UserType) => boolean
-}
+import { Link } from 'react-router-dom'
 
-function Blogs({ blogIsByLoggedUser }: BlogsProps) {
-  const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    dispatch(initializeBlogs())
-  }, [dispatch])
 
-  const blogs = useAppSelector(state => state.blogs)
+function Blogs() {
 
+
+  const blogs = useAppSelector((state) => state.blogs)
 
   return (
     <div>
@@ -29,11 +20,9 @@ function Blogs({ blogIsByLoggedUser }: BlogsProps) {
         {[...blogs]
           .sort((a, b) => b.likes - a.likes)
           .map((blog) => (
-            <Blog
-              key={blog.id}
-              blogIsByLoggedUser={blogIsByLoggedUser}
-              blog={blog}
-            />
+            <Link className="blog" key={blog.id} to={`/blogs/${blog.id}`}>
+              <h3>{blog.title}</h3>{' '}
+            </Link>
           ))}
       </main>
     </div>

@@ -12,15 +12,27 @@ import { Route, Routes, useMatch } from 'react-router-dom'
 import Users from './components/Users'
 import User from './components/User'
 import { fetchUsers } from './services/users'
-
+import Blog from './components/Blog'
+import { initializeBlogs } from './reducers/blogReducer'
 
 function App() {
   const dispatch = useAppDispatch()
   const [users, setUsers] = useState<UserResponseType[]>([])
 
-  const match = useMatch('/users/:id')
-  const userInfo = match
-    ? users.find((user) => user.id === match.params.id)
+  useEffect(() => {
+    dispatch(initializeBlogs())
+  }, [dispatch])
+
+  const userMatch = useMatch('/users/:id')
+  const userInfo = userMatch
+    ? users.find((user) => user.id === userMatch.params.id)
+    : undefined
+
+  const blogMatch = useMatch('/blogs/:id')
+
+  const blogs = useAppSelector((state) => state.blogs)
+  const blogInfo = blogMatch
+    ? [...blogs].find((blog) => blog.id === blogMatch.params.id)
     : undefined
 
   useEffect(() => {
@@ -59,12 +71,15 @@ function App() {
       <Navigation />
       <Notification />
       <Routes>
-        <Route
-          path="/"
-          element={<Blogs blogIsByLoggedUser={blogIsByLoggedUser} />}
-        />
+        <Route path="/" element={<Blogs />} />
         <Route path="/users" element={<Users users={users} />} />
         <Route path="/users/:id" element={<User userInfo={userInfo} />} />
+        <Route
+          path="/blogs/:id"
+          element={
+            <Blog blog={blogInfo} blogIsByLoggedUser={blogIsByLoggedUser} />
+          }
+        />
       </Routes>
     </div>
   )

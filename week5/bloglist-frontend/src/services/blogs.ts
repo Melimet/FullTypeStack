@@ -18,6 +18,14 @@ async function addLike(blog: BlogType) {
   return request.data
 }
 
+async function addComment(blog: BlogType) {
+  if (typeof blog.user === 'string') return undefined
+  
+  blog.user = blog.user?.id  
+  const request = await axios.put(`${baseUrl}/${blog.id}`, blog)
+  return request.data
+}
+
 async function deleteBlog(blog: BlogType) {
   const config = {
     headers: { Authorization: newBlogService.getToken() },
@@ -26,4 +34,4 @@ async function deleteBlog(blog: BlogType) {
   return request.data
 }
 
-export default { getAll, addLike, deleteBlog }
+export default { getAll, addLike, deleteBlog, addComment }

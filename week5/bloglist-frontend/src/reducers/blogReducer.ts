@@ -69,5 +69,22 @@ export function updateLike(blog: BlogType) {
   }
 }
 
+export function newComment(blog: BlogType, comment: string) {
+  return async (dispatch: Dispatch) => {
+
+    console.log(comment)
+    console.log(blog)
+    const blogCopy = { ...blog }
+    if (!blog?.comments) return
+
+    const content = { ...blog, comments: blog.comments.concat(comment) }
+
+    const result = await blogService.addComment(content)
+
+    dispatch(updateBlogs(result))
+    return result
+  }
+}
+
 export const { newBlog, setBlogs, updateBlogs, deleteBlog } = blogSlice.actions
 export default blogSlice.reducer

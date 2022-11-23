@@ -7,6 +7,16 @@ body {
   margin: 0;
 }
 
+li {
+  list-style: none;
+  border: solid black;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  width: fit-content;
+  text-align: center;
+  border-radius: 10px;
+}
+
 a {
   color: whitesmoke;
 }
@@ -43,6 +53,7 @@ a {
   flex-flow: row wrap;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
 }
 
 .blog {
@@ -57,7 +68,7 @@ a {
 }
 
 .blog:hover {
-  background-color: pink;
+  background-color: #ff69a1;
 }
 
 .error {

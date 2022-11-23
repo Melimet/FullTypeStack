@@ -2,6 +2,7 @@ import { BlogType, UserType } from '../types'
 import '../index.css'
 import { useAppDispatch } from '../hooks/dispatchHooks'
 import { removeBlog, updateLike } from '../reducers/blogReducer'
+import CommentForm from './CommentForm'
 
 interface BlogProps {
   blog: BlogType | undefined
@@ -45,7 +46,8 @@ function Blog({ blog, blogIsByLoggedUser }: BlogProps) {
         )}
 
         <h4>Comments</h4>
-        <ul>
+        <CommentForm blog={blog} />
+        <ul className='flex-wrapper'>
           {blog?.comments ? (
             blog.comments.map((comment, index) => (
               <li key={index}>{comment}</li>

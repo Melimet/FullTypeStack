@@ -48,7 +48,6 @@ function App() {
   }, [])
 
   const user = useAppSelector((state) => state.user)
-  console.log(user)
 
   function blogIsByLoggedUser(blogUser: UserType) {
     return blogUser.id === user?.id

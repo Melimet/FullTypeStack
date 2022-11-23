@@ -17,7 +17,7 @@ function LoginForm() {
 
     try {
 
-      dispatch(loginUser({username, password}))
+      await dispatch(loginUser({username, password}))
 
       setUsername('')
       setPassword('')
@@ -47,6 +47,7 @@ function LoginForm() {
   return (
     <div>
       <h2>Login</h2>
+      <p>Test login credentials name: Kalevi123 password: Kalevi123</p>
       <form onSubmit={handleLogin}>
         <div>
           username

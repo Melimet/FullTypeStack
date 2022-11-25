@@ -1,5 +1,5 @@
 import express from "express"
-import { QueryTypes, Sequelize } from "sequelize"
+import { DataTypes, Model, QueryTypes, Sequelize } from "sequelize"
 require("dotenv").config()
 
 const app = express()
@@ -16,18 +16,62 @@ if (!process.env.DATABASE_URL) {
 
 const sequelize = new Sequelize(process.env.DATABASE_URL)
 
-const main = async () => {
-  try {
-    await sequelize.authenticate()
-    console.log("Connection has been established successfully.")
-    const blogs = await sequelize.query("SELECT * FROM blogs", {type: QueryTypes.SELECT})
-    console.log(blogs)
-    sequelize.close()
-  } catch (error) {
-    console.error("Unable to connect to the database:", error)
+class Blog extends Model {}
+Blog.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    author: {
+      type: DataTypes.TEXT,
+    },
+    url: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    title: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    likes: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+  },
+  {
+    sequelize,
+    underscored: true,
+    timestamps: false,
+    modelName: "blog",
   }
-}
+)
+Blog.sync()
 
-main()
+app.get("/api/blogs", async (_req, res) => {
+  const blogs = await Blog.findAll()
+  console.log(blogs)
+  return res.json(blogs)
+})
+
+app.post("/api/blogs", async (req, res) => {
+  const blog = req.body
+  const newBlog = await Blog.create(blog)
+  return res.json(newBlog)
+})
+
+app.delete("/api/blogs/:id", async (req, res) => {
+
+  const id = req.params.id
+  const deletedBlog = await Blog.destroy({
+    where: {
+      id: id,
+    },
+  })
+  return res.json(deletedBlog)  
+})
+
 
 export { app }

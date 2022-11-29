@@ -28,4 +28,14 @@ blogRouter.delete("/:id", blogFinder,async (req, res) => {
   return res.status(204).end()
 })
 
+blogRouter.put("/:id", blogFinder, async (req, res) => {
+  const blog = req.body
+  if (req.blog) {
+    const updatedBlog = await req.blog.update(blog)
+    return res.status(204).send(updatedBlog)
+  }
+  return res.status(404).end()
+})
+
+
 export default blogRouter

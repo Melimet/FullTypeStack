@@ -1,5 +1,7 @@
 import Blog from "../models/blog"
+import User from "./user"
 
 Blog.sync()
+User.sync()
 
-export { Blog }
+export { Blog, User }

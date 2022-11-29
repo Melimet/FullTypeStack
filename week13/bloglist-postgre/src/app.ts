@@ -1,7 +1,7 @@
 import express from "express"
 import blogRouter from "./controllers/blogs"
 
-
+require('express-async-errors')
 const app = express()
 
 app.use(express.json())

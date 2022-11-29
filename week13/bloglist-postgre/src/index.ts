@@ -1,9 +1,9 @@
 import { app } from './app'
 import http from 'http'
-const port = 3000
+import { PORT } from './util/config'
 
 const server = http.createServer(app)
 
-server.listen(port, () => {
-  console.log(`Server running on port ${port}`)
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
 })

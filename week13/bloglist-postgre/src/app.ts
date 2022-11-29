@@ -1,6 +1,6 @@
 import express from "express"
-import { DataTypes, Model, QueryTypes, Sequelize } from "sequelize"
-require("dotenv").config()
+import { DataTypes, Model, Sequelize } from "sequelize"
+
 
 const app = express()
 
@@ -72,6 +72,5 @@ app.delete("/api/blogs/:id", async (req, res) => {
   })
   return res.json(deletedBlog)  
 })
-
 
 export { app }

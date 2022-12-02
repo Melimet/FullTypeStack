@@ -22,4 +22,20 @@ userRouter.get("/:id", async (req, res) => {
   return res.status(404).end()
 })
 
+userRouter.put("/:id", async (req, res) => {
+  const user = req.body
+  const updatedUser = await User.update(user, {
+    where: {
+      id: req.params.id
+    }
+  })
+  
+  if (!updatedUser) {
+    return res.status(404).end()
+  }
+
+  return res.status(204).send(updatedUser)
+})
+
+
 export default userRouter

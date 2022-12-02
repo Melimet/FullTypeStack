@@ -1,9 +1,13 @@
-import express from 'express'
-import { Blog } from '../models'
+import express from "express"
+import { Blog } from "../models"
 
 const blogRouter = express.Router()
 
-async function blogFinder(req: express.Request, res: express.Response, next: express.NextFunction) {
+async function blogFinder(
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) {
   req.blog = await Blog.findByPk(req.params.id)
   return next()
 }
@@ -20,8 +24,7 @@ blogRouter.post("/", async (req, res) => {
   return res.json(newBlog)
 })
 
-blogRouter.delete("/:id", blogFinder,async (req, res) => {
-
+blogRouter.delete("/:id", blogFinder, async (req, res) => {
   if (req.blog) {
     await req.blog.destroy()
   }
@@ -36,6 +39,5 @@ blogRouter.put("/:id", blogFinder, async (req, res) => {
   }
   return res.status(404).end()
 })
-
 
 export default blogRouter

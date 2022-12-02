@@ -3,6 +3,14 @@ import { Blog } from "../models"
 
 const blogRouter = express.Router()
 
+declare global {
+  namespace Express {
+    export interface Request {
+      blog: Blog | null
+    }
+  }
+}
+
 async function blogFinder(
   req: express.Request,
   res: express.Response,

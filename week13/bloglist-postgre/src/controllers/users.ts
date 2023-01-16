@@ -22,11 +22,11 @@ userRouter.get("/:id", async (req, res) => {
   return res.status(404).end()
 })
 
-userRouter.put("/:id", async (req, res) => {
+userRouter.put("/:username", async (req, res) => {
   const user = req.body
   const updatedUser = await User.update(user, {
     where: {
-      id: req.params.id
+      username: req.params.username
     }
   })
   

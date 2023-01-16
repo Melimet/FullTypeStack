@@ -11,6 +11,13 @@ app.use("/api/blogs/", blogRouter)
 
 app.use("/api/users/", userRouter)
 
+app.use((err, req, res, next) => {
+  console.error(err)
+  next(err)
+  res.status(500).send({ error: "Something went wrong" })
+})
+
+
 app.get("/", (_req, res) => {
   res.send("Hello World!")
 })

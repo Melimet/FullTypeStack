@@ -8,10 +8,15 @@ userRouter.get("/", async (_req, res) => {
   return res.json(users)
 })
 
-userRouter.post("/", async (req, res) => {
-  const user = req.body
-  const newUser = await User.create(user)
-  return res.json(newUser)
+userRouter.post("/", async (req, res, next) => {
+  try {
+    const user = req.body
+    const newUser = await User.create(user)
+
+    return res.json(newUser)
+  } catch (e) {
+    next(e)
+  }
 })
 
 userRouter.get("/:id", async (req, res) => {

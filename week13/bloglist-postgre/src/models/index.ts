@@ -1,7 +1,10 @@
 import Blog from "../models/blog"
 import User from "./user"
 
-Blog.sync()
-User.sync()
+User.hasMany(Blog)
+Blog.belongsTo(User)
+
+Blog.sync({alter: true})
+User.sync({alter: true})
 
 export { Blog, User }

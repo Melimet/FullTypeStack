@@ -1,5 +1,7 @@
 import express from "express"
-import { Blog } from "../models"
+import { Blog, User } from "../models"
+import { CustomRequest } from "../types"
+import tokenExtractor from "../util/tokenExtractor"
 
 const blogRouter = express.Router()
 
@@ -26,9 +28,20 @@ blogRouter.get("/", async (_req, res) => {
   return res.json(blogs)
 })
 
-blogRouter.post("/", async (req, res) => {
+blogRouter.post("/", tokenExtractor, async (req, res) => {
   const blog = req.body
-  const newBlog = await Blog.create(blog)
+
+  if (!(req as CustomRequest).decodedToken) {
+    return res.status(401).json({ error: "token missing or invalid" })
+  }
+
+  const user = await User.findByPk((req as CustomRequest).decodedToken.id)
+
+  if (!user) {
+    return res.status(401).json({ error: "Unable to find user with token" })
+  }
+
+  const newBlog = await Blog.create({...blog, userId: user.id})
   return res.json(newBlog)
 })
 

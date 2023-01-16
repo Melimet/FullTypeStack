@@ -2,7 +2,14 @@ import { DataTypes, Model } from "sequelize"
 import { sequelize } from "../util/db"
 
 
-class Blog extends Model {}
+class Blog extends Model {
+  declare id: number
+  declare author: string
+  declare url: string
+  declare title: string
+  declare likes: number
+  declare userId: number
+}
 
 Blog.init(
   {
